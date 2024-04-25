@@ -45,7 +45,7 @@ public class HelloApplication extends Application {
         this.stage.setResizable(false);
         this.stage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
         this.stage.setHeight(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-
+        this.stage.getIcons().add(new Image("file:src/main/resources/Images/space-invaders.png"));
 
 
         playButton.setPrefSize(450, 75);
