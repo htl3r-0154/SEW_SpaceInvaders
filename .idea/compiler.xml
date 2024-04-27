@@ -9,8 +9,5 @@
         <module name="SEW-Projekt" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="SEW-Projekt" target="0" />
-    </bytecodeTargetLevel>
   </component>
 </project>

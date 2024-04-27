@@ -55,13 +55,10 @@ public class HelloApplication extends Application {
         playButton.setTextFill(Color.WHITE);
         playButton.setFont(new Font(25));
         playButton.setOnAction(event -> {
-            playButton.setVisible(false);
-            quitButton.setVisible(false);
-
-            music1("src/main/resources/Sounds/Helldivers 2 Main Theme - A Cup Of Liber-Tea.mp3");
 
             onPlayButtonClick();
 
+            //TODO Make new Sound/SFX class for background music and transitions
             mediaPlayer1.setVolume(20);
             mediaPlayer2.setVolume(80);
             mediaPlayer1.setVolume(40);
@@ -86,27 +83,36 @@ public class HelloApplication extends Application {
         });
 
 
-        setImg(menu, "src/main/resources/Images/MainMenu.png");
+        setImgMenu(menu, "src/main/resources/Images/MainMenu.png");
         viewMenu.setFitHeight(stage.getHeight());
         viewMenu.setFitWidth(stage.getWidth());
         viewMenu.setLayoutX(0);
         viewMenu.setLayoutY(0);
 
 
-        root.getChildren().add(viewMenu);
+        root.getChildren().addAll(viewMenu);
         root.getChildren().addAll(playButton, quitButton);
         music2("src/main/resources/Sounds/Harvest Dawn.mp3");
         this.stage.show();
 
     }
 
-    public void setImg(Image image, String src){
+    public void setImgMenu(Image image, String src){
         try {
             image = new Image(new FileInputStream(src));
         } catch (FileNotFoundException ignored) {
         }
         viewMenu = new ImageView(image);
         viewMenu.toFront();
+    }
+
+    public void setImgBackground(Image image, String src){
+        try {
+            image = new Image(new FileInputStream(src));
+        } catch (FileNotFoundException ignored) {
+        }
+        viewBackground = new ImageView(image);
+        viewBackground.toFront();
     }
 
     public void music1(String path){
@@ -126,7 +132,19 @@ public class HelloApplication extends Application {
     }
 
     public void onPlayButtonClick(){
-        setImg(background, "src/main/resources/Images/Popekjabba.png");
+        playButton.setVisible(false);
+        quitButton.setVisible(false);
+
+        music1("src/main/resources/Sounds/Helldivers 2 Main Theme - A Cup Of Liber-Tea.mp3");
+
+        setImgBackground(background, "src/main/resources/Images/GameBackground.png");
+
+        viewBackground.setFitHeight(stage.getHeight());
+        viewBackground.setFitWidth(stage.getWidth());
+        viewBackground.setLayoutX(0);
+        viewBackground.setLayoutY(0);
+
+        root.getChildren().add(viewBackground);
         System.out.println("test");
     }
     public static void main(String[] args) {
