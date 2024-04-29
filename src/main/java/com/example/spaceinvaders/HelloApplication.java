@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 //TODO make a game background with good resolution
+//TODO add FileReader for Highscore
+//TODO Display Highscore
+//TODO add Enemy's to hit with Hitbox
+//TODO add Bunkers with Hitbox to protect Spaceship
 
 public class HelloApplication extends Application {
     public double ScreenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
