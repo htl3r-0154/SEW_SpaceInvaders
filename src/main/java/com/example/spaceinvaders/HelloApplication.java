@@ -26,16 +26,17 @@ import java.nio.file.Paths;
 //TODO add FileReader for Highscore
 //TODO Display Highscore
 //TODO add Enemy's to hit with Hitbox
-//TODO add Bunkers with Hitbox to protect Spaceship
+//TODO add Bunkers with Hitbox to protect Spaceship and
 
 public class HelloApplication extends Application {
-    public double ScreenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    public double ScreenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+    public double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    public double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
     public Button quitButton = new Button("QUIT");
     public Image menu = null;
     public Image background = null;
     public Image shot = null;
+    public double shotWidth = 32;
     public double shotSpeed = 20;
     public Image spaceship = null;
     public double spaceshipWidth = 120;
@@ -50,7 +51,7 @@ public class HelloApplication extends Application {
     public Scene scene = new Scene(root);
     public MediaPlayer mediaPlayer2;
     public MediaPlayer mediaPlayer1;
-    public boolean is4k = ScreenHeight >= 1430.0;
+    public boolean is4k = screenHeight >= 1430.0;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -61,68 +62,28 @@ public class HelloApplication extends Application {
         this.stage.setFullScreenExitHint("");
         this.stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         this.stage.setResizable(false);
-        this.stage.setWidth(ScreenWidth);
-        this.stage.setHeight(ScreenHeight);
+        this.stage.setWidth(screenWidth);
+        this.stage.setHeight(screenHeight);
         this.stage.getIcons().add(new Image("file:src/main/resources/Images/space-invaders.png"));
+        //Create PlayButton
+        setPlayButton();
 
+        //Create ExitButton
+        setExitButton();
 
-        playButton.setPrefSize(450, 75);
-        playButton.setLayoutX(stage.getWidth() / 2 - playButton.getPrefWidth() / 2);
-        if (!is4k) {
-            playButton.setLayoutY(stage.getHeight() / 2 + playButton.getPrefHeight() * 2 + 50);
-        } else {
-            playButton.setLayoutY(stage.getHeight() / 2 + playButton.getPrefHeight() * 4);
-        }
-        playButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
-        playButton.setTextFill(Color.WHITE);
-        playButton.setFont(new Font(25));
-        playButton.setOnAction(event -> {
+        //Create Menu picture
+        setMenu();
 
-            onPlayButtonClick();
-
-            //TODO Make new Sound/SFX class for background music and transitions
-            mediaPlayer1.setVolume(20);
-            mediaPlayer2.setVolume(80);
-            mediaPlayer1.setVolume(40);
-            mediaPlayer2.setVolume(60);
-            mediaPlayer1.setVolume(60);
-            mediaPlayer2.setVolume(40);
-            mediaPlayer1.setVolume(80);
-            mediaPlayer2.setVolume(20);
-            mediaPlayer1.setVolume(100);
-            mediaPlayer2.stop();
-
-        });
-
-        quitButton.setPrefSize(450, 75);
-        quitButton.setLayoutX(stage.getWidth() / 2 - quitButton.getPrefWidth() / 2);
-        if (!is4k) {
-            quitButton.setLayoutY(stage.getHeight() / 2 + quitButton.getPrefHeight() * 3 + 50);
-        } else {
-            quitButton.setLayoutY(stage.getHeight() / 2 + quitButton.getPrefHeight() * 5);
-        }
-        quitButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
-        quitButton.setTextFill(Color.WHITE);
-        quitButton.setFont(new Font(25));
-        quitButton.setOnAction(event -> {
-            System.exit(0);
-        });
-
-
-        setImgMenu(menu, "src/main/resources/Images/MainMenu.png");
-        viewMenu.setFitHeight(stage.getHeight());
-        viewMenu.setFitWidth(stage.getWidth());
-        viewMenu.setLayoutX(0);
-        viewMenu.setLayoutY(0);
-
-
+        //Add to root
         root.getChildren().addAll(viewMenu);
         root.getChildren().addAll(playButton, quitButton);
+
+        //Add music
         music2("src/main/resources/Sounds/Harvest Dawn.mp3");
+
+        //show window
         this.stage.show();
-
     }
-
 
     public void setImgMenu(Image image, String src){
         try {
@@ -179,17 +140,17 @@ public class HelloApplication extends Application {
     }
 
     public void shoot(){
-        double posX = viewSpaceship.getX() + (spaceshipWidth / 2);
+        double posX = viewSpaceship.getX() + (spaceshipWidth / 2) - (shotWidth / 2);
 
         setImgShot("src/main/resources/Images/Shot.png");
         viewShot.setX(posX);
-        viewShot.setY(spaceshipHeight / 2 + 180);
+        viewShot.setY(screenHeight - 180);
 
-        System.out.println("test");
+        root.getChildren().add(viewShot);
     }
 
     //TODO Make onPlayButtonClick a new class for better code
-    public void onPlayButtonClick(){
+    public void PlayButtonClick(){
         playButton.setVisible(false);
         quitButton.setVisible(false);
 
@@ -202,18 +163,19 @@ public class HelloApplication extends Application {
         viewBackground.setFitWidth(stage.getWidth());
         viewBackground.setLayoutX(0);
         viewBackground.setLayoutY(0);
-        viewSpaceship.setX(ScreenWidth / 2 - spaceship.getWidth() / 2);
+        viewSpaceship.setX(screenWidth / 2 - spaceship.getWidth() / 2);
         viewSpaceship.setY(stage.getHeight() - 180);
 
+        //TODO make ButtonListener own method or class
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case LEFT -> {
-                    if (!(viewSpaceship.getX() < (ScreenWidth * 0.01))) {
+                    if (!(viewSpaceship.getX() < (screenWidth * 0.01))) {
                         viewSpaceship.setX(viewSpaceship.getX() - spaceshipSpeed) ;
                     }
                 }
                 case RIGHT -> {
-                    if (!(viewSpaceship.getX() + 128 > ScreenWidth - (ScreenWidth * 0.01))) {
+                    if (!(viewSpaceship.getX() + 128 > screenWidth - (screenWidth * 0.01))) {
                         viewSpaceship.setX(viewSpaceship.getX() + spaceshipSpeed);
                     }
                 }
@@ -223,6 +185,61 @@ public class HelloApplication extends Application {
 
         root.getChildren().addAll(viewBackground, viewSpaceship);
     }
+
+    public void setPlayButton(){
+        playButton.setPrefSize(450, 75);
+        playButton.setLayoutX(stage.getWidth() / 2 - playButton.getPrefWidth() / 2);
+        if (!is4k) {
+            playButton.setLayoutY(stage.getHeight() / 2 + playButton.getPrefHeight() * 2 + 50);
+        } else {
+            playButton.setLayoutY(stage.getHeight() / 2 + playButton.getPrefHeight() * 4);
+        }
+        playButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
+        playButton.setTextFill(Color.WHITE);
+        playButton.setFont(new Font(25));
+        playButton.setOnAction(_ -> {
+
+            PlayButtonClick();
+
+            //TODO Make new Sound/SFX class for background music and transitions
+            mediaPlayer1.setVolume(20);
+            mediaPlayer2.setVolume(80);
+            mediaPlayer1.setVolume(40);
+            mediaPlayer2.setVolume(60);
+            mediaPlayer1.setVolume(60);
+            mediaPlayer2.setVolume(40);
+            mediaPlayer1.setVolume(80);
+            mediaPlayer2.setVolume(20);
+            mediaPlayer1.setVolume(100);
+            mediaPlayer2.stop();
+
+        });
+    }
+
+    public void setExitButton(){
+        quitButton.setPrefSize(450, 75);
+        quitButton.setLayoutX(stage.getWidth() / 2 - quitButton.getPrefWidth() / 2);
+        if (!is4k) {
+            quitButton.setLayoutY(stage.getHeight() / 2 + quitButton.getPrefHeight() * 3 + 50);
+        } else {
+            quitButton.setLayoutY(stage.getHeight() / 2 + quitButton.getPrefHeight() * 5);
+        }
+        quitButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
+        quitButton.setTextFill(Color.WHITE);
+        quitButton.setFont(new Font(25));
+        quitButton.setOnAction(_ -> {
+            System.exit(0);
+        });
+    }
+
+    public void setMenu() {
+        setImgMenu(menu, "src/main/resources/Images/MainMenu.png");
+        viewMenu.setFitHeight(stage.getHeight());
+        viewMenu.setFitWidth(stage.getWidth());
+        viewMenu.setLayoutX(0);
+        viewMenu.setLayoutY(0);
+    }
+
     public static void main(String[] args) {
         launch();
     }
