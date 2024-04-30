@@ -26,7 +26,7 @@ import java.nio.file.Paths;
 //TODO add FileReader for Highscore
 //TODO Display Highscore
 //TODO add Enemy's to hit with Hitbox
-//TODO add Bunkers with Hitbox to protect Spaceship and
+//TODO add Bunkers with Hitbox to protect Spaceship
 
 public class HelloApplication extends Application {
     public double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -156,7 +156,12 @@ public class HelloApplication extends Application {
 
         music1("src/main/resources/Sounds/Helldivers 2 Main Theme - A Cup Of Liber-Tea.mp3");
 
-        setImgBackground(background, "src/main/resources/Images/GameBackground.png");
+        if (is4k){
+            setImgBackground(background, "src/main/resources/Images/GameBackground4k.png");
+        } else {
+            setImgBackground(background, "src/main/resources/Images/GameBackground!4k.png");
+        }
+
         setImgSpaceship("src/main/resources/Images/Spaceship.png");
 
         viewBackground.setFitHeight(stage.getHeight());
