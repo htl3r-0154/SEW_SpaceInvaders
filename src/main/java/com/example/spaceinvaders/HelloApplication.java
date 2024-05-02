@@ -1,5 +1,7 @@
 package com.example.spaceinvaders;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -16,13 +18,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Paths;
 
-//TODO make a game background with good resolution
 //TODO add FileReader for Highscore
 //TODO Display Highscore
 //TODO add Enemy's to hit with Hitbox
@@ -37,7 +38,7 @@ public class HelloApplication extends Application {
     public Image background = null;
     public Image shot = null;
     public double shotWidth = 32;
-    public double shotSpeed = 20;
+    public double shotSpeed = 10;
     public Image spaceship = null;
     public double spaceshipWidth = 120;
     public double spaceshipHeight = 120;
@@ -54,7 +55,7 @@ public class HelloApplication extends Application {
     public boolean is4k = screenHeight >= 1430.0;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         this.stage = stage;
         this.stage.setTitle("Space Invaders - Main Menu");
         this.stage.setScene(scene);
@@ -142,11 +143,20 @@ public class HelloApplication extends Application {
     public void shoot(){
         double posX = viewSpaceship.getX() + (spaceshipWidth / 2) - (shotWidth / 2);
 
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), _ -> updateShot()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+
         setImgShot("src/main/resources/Images/Shot.png");
         viewShot.setX(posX);
         viewShot.setY(screenHeight - 180);
 
         root.getChildren().add(viewShot);
+    }
+
+    public void updateShot() {
+        viewShot.setY(viewShot.getY() - shotSpeed);
+        System.out.println("test");
     }
 
     //TODO Make onPlayButtonClick a new class for better code
@@ -232,9 +242,7 @@ public class HelloApplication extends Application {
         quitButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
         quitButton.setTextFill(Color.WHITE);
         quitButton.setFont(new Font(25));
-        quitButton.setOnAction(_ -> {
-            System.exit(0);
-        });
+        quitButton.setOnAction(_ -> System.exit(0));
     }
 
     public void setMenu() {
