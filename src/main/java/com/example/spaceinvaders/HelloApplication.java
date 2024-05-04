@@ -1,11 +1,13 @@
 package com.example.spaceinvaders;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,9 +25,6 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
 
 //TODO add FileReader for Highscore
 //TODO Display Highscore
@@ -72,6 +71,7 @@ public class HelloApplication extends Application {
         this.stage.setWidth(screenWidth);
         this.stage.setHeight(screenHeight);
         this.stage.getIcons().add(new Image("file:src/main/resources/Images/space-invaders.png"));
+
         //Create PlayButton
         setPlayButton();
 
@@ -117,7 +117,13 @@ public class HelloApplication extends Application {
         }
 
         viewSpaceship = new ImageView(spaceship);
-        viewSpaceship.toFront();
+
+        FadeTransition fade = new FadeTransition();
+        fade.setNode(viewSpaceship);
+        fade.setDuration(Duration.millis(500));
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.play();
     }
 
     public void setImgShot(String src){
@@ -154,7 +160,7 @@ public class HelloApplication extends Application {
         timeline.play();
 
         viewShot.setX(posX);
-        viewShot.setY(screenHeight - 180);
+        viewShot.setY(screenHeight - 145);
 
         shotSound("src/main/resources/Sounds/Laser Shot.mp3");
 
@@ -196,9 +202,7 @@ public class HelloApplication extends Application {
         viewSpaceship.setX(screenWidth / 2 - spaceship.getWidth() / 2);
         viewSpaceship.setY(stage.getHeight() - 180);
 
-        //Timer timer = new Timer(String.valueOf(0));
-
-        setImgShot("src/main/resources/Images/Shot.png");
+        setImgShot("src/main/resources/Images/Shot1.png");
         viewShot.setY(-100);
         viewShot.setX(0);
 
