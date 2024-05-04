@@ -23,6 +23,9 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
 
 //TODO add FileReader for Highscore
 //TODO Display Highscore
@@ -38,6 +41,7 @@ public class HelloApplication extends Application {
     public Image background = null;
     public Image shot = null;
     public double shotWidth = 32;
+    public double shotHeight = 32;
     public double shotSpeed = 10;
     public Image spaceship = null;
     public double spaceshipWidth = 120;
@@ -52,7 +56,9 @@ public class HelloApplication extends Application {
     public Scene scene = new Scene(root);
     public MediaPlayer mediaPlayer2;
     public MediaPlayer mediaPlayer1;
+    public MediaPlayer shotSoundSFX;
     public boolean is4k = screenHeight >= 1430.0;
+    public boolean first = true;
 
     @Override
     public void start(Stage stage) {
@@ -143,20 +149,29 @@ public class HelloApplication extends Application {
     public void shoot(){
         double posX = viewSpaceship.getX() + (spaceshipWidth / 2) - (shotWidth / 2);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), _ -> updateShot()));
-        timeline.setCycleCount(Timeline.INDEFINITE);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> updateShot()));
+        timeline.setCycleCount(100);
         timeline.play();
 
-        setImgShot("src/main/resources/Images/Shot.png");
         viewShot.setX(posX);
         viewShot.setY(screenHeight - 180);
 
-        root.getChildren().add(viewShot);
+        shotSound("src/main/resources/Sounds/Laser Shot.mp3");
+
+        if (first){
+            root.getChildren().add(viewShot);
+            first = false;
+        }
+    }
+
+    public void shotSound(String path){
+        Media m = new Media(Paths.get(path).toUri().toString());
+        shotSoundSFX = new MediaPlayer(m);
+        shotSoundSFX.play();
     }
 
     public void updateShot() {
         viewShot.setY(viewShot.getY() - shotSpeed);
-        System.out.println("test");
     }
 
     //TODO Make onPlayButtonClick a new class for better code
@@ -181,20 +196,30 @@ public class HelloApplication extends Application {
         viewSpaceship.setX(screenWidth / 2 - spaceship.getWidth() / 2);
         viewSpaceship.setY(stage.getHeight() - 180);
 
+        //Timer timer = new Timer(String.valueOf(0));
+
+        setImgShot("src/main/resources/Images/Shot.png");
+        viewShot.setY(-100);
+        viewShot.setX(0);
+
         //TODO make ButtonListener own method or class
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case LEFT -> {
-                    if (!(viewSpaceship.getX() < (screenWidth * 0.01))) {
+                    if (!(viewSpaceship.getX() < (screenWidth * 0.02))) {
                         viewSpaceship.setX(viewSpaceship.getX() - spaceshipSpeed) ;
                     }
                 }
                 case RIGHT -> {
-                    if (!(viewSpaceship.getX() + 128 > screenWidth - (screenWidth * 0.01))) {
+                    if (!(viewSpaceship.getX() + spaceshipWidth > screenWidth - (screenWidth * 0.02))) {
                         viewSpaceship.setX(viewSpaceship.getX() + spaceshipSpeed);
                     }
                 }
-                case UP -> shoot();
+                case UP -> {
+                    if (viewShot.getY() + shotHeight < 0){
+                        shoot();
+                    }
+                }
             }
         });
 
@@ -212,7 +237,7 @@ public class HelloApplication extends Application {
         playButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
         playButton.setTextFill(Color.WHITE);
         playButton.setFont(new Font(25));
-        playButton.setOnAction(_ -> {
+        playButton.setOnAction(e -> {
 
             PlayButtonClick();
 
@@ -242,7 +267,7 @@ public class HelloApplication extends Application {
         quitButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
         quitButton.setTextFill(Color.WHITE);
         quitButton.setFont(new Font(25));
-        quitButton.setOnAction(_ -> System.exit(0));
+        quitButton.setOnAction(e -> System.exit(0));
     }
 
     public void setMenu() {
