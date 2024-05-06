@@ -80,15 +80,6 @@ public class SceneBuilder {
             gameEngine.eventHandler.playButtonClick();
 
             //TODO Make new Sound/SFX class for background music and transitions
-            gameEngine.mediaPlayer1.setVolume(20);
-            gameEngine.mediaPlayer2.setVolume(80);
-            gameEngine.mediaPlayer1.setVolume(40);
-            gameEngine.mediaPlayer2.setVolume(60);
-            gameEngine.mediaPlayer1.setVolume(60);
-            gameEngine.mediaPlayer2.setVolume(40);
-            gameEngine.mediaPlayer1.setVolume(80);
-            gameEngine.mediaPlayer2.setVolume(20);
-            gameEngine.mediaPlayer1.setVolume(100);
             gameEngine.mediaPlayer2.stop();
 
         });
