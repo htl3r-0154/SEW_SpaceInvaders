@@ -88,9 +88,13 @@ public class GameEngine extends Application {
 
     public void shoot(){
         double posX = viewSpaceship.getX() + (spaceshipWidth / 2) - (shotWidth / 2);
-
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> updateShot()));
-        timeline.setCycleCount(100);
+
+        if (is4k){
+            timeline.setCycleCount(150);
+        } else {
+            timeline.setCycleCount(100);
+        }
         timeline.play();
 
         viewShot.setX(posX);
