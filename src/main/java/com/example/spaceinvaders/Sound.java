@@ -14,6 +14,7 @@ public class Sound {
     public void music1(String path){
         Media m = new Media(Paths.get(path).toUri().toString());
         gameEngine.mediaPlayer1 = new MediaPlayer(m);
+        gameEngine.mediaPlayer1.setVolume(0.3);
         gameEngine.mediaPlayer1.play();
         gameEngine.mediaPlayer1.setAutoPlay(true);
         gameEngine.mediaPlayer1.setCycleCount(MediaPlayer.INDEFINITE);

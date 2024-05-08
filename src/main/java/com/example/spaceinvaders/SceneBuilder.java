@@ -40,11 +40,11 @@ public class SceneBuilder {
 
     public void setImgSpaceship(String src){
         try {
-            gameEngine.spaceship = new Image(new FileInputStream(src));
+            gameEngine.spaceshipImg = new Image(new FileInputStream(src));
         } catch (FileNotFoundException ignored){
         }
 
-        gameEngine.viewSpaceship = new ImageView(gameEngine.spaceship);
+        gameEngine.viewSpaceship = new ImageView(gameEngine.spaceshipImg);
 
         FadeTransition fade = new FadeTransition();
         fade.setNode(gameEngine.viewSpaceship);
@@ -56,11 +56,11 @@ public class SceneBuilder {
 
     public void setImgShot(String src){
         try {
-            gameEngine.shot = new Image((new FileInputStream(src)));
+            gameEngine.shotImg = new Image((new FileInputStream(src)));
         } catch (FileNotFoundException ignored) {
         }
 
-        gameEngine.viewShot = new ImageView(gameEngine.shot);
+        gameEngine.viewShot = new ImageView(gameEngine.shotImg);
         gameEngine.viewShot.setY(-100);
         gameEngine.viewShot.setX(0);
         gameEngine.viewShot.toFront();
@@ -73,14 +73,12 @@ public class SceneBuilder {
 
     public void setImgEnemy(String src){
         try {
-            gameEngine.enemies = new Image(new FileInputStream((src)));
+            gameEngine.enemiesImg = new Image(new FileInputStream((src)));
         } catch (FileNotFoundException ignored){
-            System.out.println("test");
         }
 
-        gameEngine.viewEnemies = new ImageView(gameEngine.enemies);
+        gameEngine.viewEnemies = new ImageView(gameEngine.enemiesImg);
         gameEngine.viewEnemies.toFront();
-        System.out.println("test!");
     }
 
     public void resetImgEnemy() {
@@ -124,7 +122,7 @@ public class SceneBuilder {
     }
 
     public void setMenu() {
-        gameEngine.sceneBuilder.setImgMenu(gameEngine.menu, "src/main/resources/Images/MainMenu.png");
+        gameEngine.sceneBuilder.setImgMenu(gameEngine.menuImg, "src/main/resources/Images/MainMenu.png");
         gameEngine.viewMenu.setFitHeight(gameEngine.stage.getHeight());
         gameEngine.viewMenu.setFitWidth(gameEngine.stage.getWidth());
         gameEngine.viewMenu.setLayoutX(0);

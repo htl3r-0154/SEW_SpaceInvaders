@@ -2,12 +2,12 @@ package com.example.spaceinvaders;
 
 public class Enemy {
     public GameEngine gameEngine;
-    public double xPos;
-    public double yPos;
+    public double posX;
+    public double posY;
 
     public Enemy(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
-        xPos = this.gameEngine.viewEnemies.getX();
-        yPos = this.gameEngine.viewEnemies.getY();
+        posX = this.gameEngine.viewEnemies.getX();
+        posY = this.gameEngine.viewEnemies.getY();
     }
 }

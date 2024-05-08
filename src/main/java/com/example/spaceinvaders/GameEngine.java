@@ -24,21 +24,22 @@ public class GameEngine extends Application {
     public Sound sound;
     public EventHandler eventHandler;
     public Enemy enemy;
+    public Shot shot;
     public double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
     public Button quitButton = new Button("QUIT");
-    public Image menu = null;
-    public Image background = null;
-    public Image shot = null;
+    public Image menuImg = null;
+    public Image backgroundImg = null;
+    public Image shotImg = null;
     public double shotWidth = 8;
     public double shotHeight = 24;
     public double shotSpeed = 10;
-    public Image spaceship = null;
+    public Image spaceshipImg = null;
     public double spaceshipWidth = 120;
     public double spaceshipHeight = 120;
     public double spaceshipSpeed = 20;
-    public Image enemies = null;
+    public Image enemiesImg = null;
     public double enemy3Width = 60;
     public double enemy3Height = 60;
     public ImageView viewMenu;
@@ -67,7 +68,6 @@ public class GameEngine extends Application {
         this.stage.setWidth(screenWidth);
         this.stage.setHeight(screenHeight);
         this.stage.getIcons().add(new Image("file:src/main/resources/Images/space-invaders.png"));
-        this.enemy = new Enemy(this);
         this.sceneBuilder = new SceneBuilder(this);
         this.sound = new Sound(this);
         this.eventHandler = new EventHandler(this, sound, sceneBuilder);
@@ -92,33 +92,14 @@ public class GameEngine extends Application {
         this.stage.show();
     }
 
-    public void shoot(){
-        double posX = viewSpaceship.getX() + (spaceshipWidth / 2) - (shotWidth / 2);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> updateShot()));
-
-        if (is4k){
-            timeline.setCycleCount(150);
-        } else {
-            timeline.setCycleCount(100);
-        }
-        timeline.play();
-
-        viewShot.setX(posX);
-        viewShot.setY(screenHeight - 145);
-
-        sound.shotSound("src/main/resources/Sounds/Laser Shot.mp3");
-
-        if (first){
-            root.getChildren().add(viewShot);
-            first = false;
-        }
+    public void initEnemy(){
+        this.enemy = new Enemy(this);
     }
 
-    public void updateShot() {
-        viewShot.setY(viewShot.getY() - shotSpeed);
-
-        collisionCheck();
+    public void initShot(){
+        this.shot = new Shot(this);
     }
+
 
     public void collisionCheck() {
         for (int i = 0; i < shotWidth; i++) {

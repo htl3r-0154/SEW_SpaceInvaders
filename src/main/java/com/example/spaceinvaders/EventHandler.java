@@ -20,9 +20,9 @@ public class EventHandler {
         sound.music1("src/main/resources/Sounds/Helldivers 2 Main Theme - A Cup Of Liber-Tea.mp3");
 
         if (gameEngine.is4k){
-            sceneBuilder.setImgBackground(gameEngine.background, "src/main/resources/Images/GameBackground4k.png");
+            sceneBuilder.setImgBackground(gameEngine.backgroundImg, "src/main/resources/Images/GameBackground4k.png");
         } else {
-            sceneBuilder.setImgBackground(gameEngine.background, "src/main/resources/Images/GameBackground!4k.png");
+            sceneBuilder.setImgBackground(gameEngine.backgroundImg, "src/main/resources/Images/GameBackground!4k.png");
         }
 
         sceneBuilder.setImgSpaceship("src/main/resources/Images/Spaceship.png");
@@ -32,11 +32,14 @@ public class EventHandler {
         gameEngine.viewBackground.setLayoutX(0);
         gameEngine.viewBackground.setLayoutY(0);
         gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceshipWidth / 2);
-        gameEngine.viewSpaceship.setY(gameEngine.stage.getHeight() - 180);
+        gameEngine.viewSpaceship.setY(gameEngine.stage.getHeight() - gameEngine.spaceshipHeight - 60);
 
         gameEngine.sceneBuilder.setImgEnemy("src/main/resources/Images/Enemy3.png");
         gameEngine.viewEnemies.setX(gameEngine.screenWidth / 2 - gameEngine.enemy3Width / 2);
         gameEngine.viewEnemies.setY(100);
+
+        gameEngine.initEnemy();
+        gameEngine.initShot();
 
         sceneBuilder.setImgShot("src/main/resources/Images/Shot1_1.png");
 
@@ -59,7 +62,7 @@ public class EventHandler {
             }
             case UP, W, SPACE -> {
                 if (gameEngine.viewShot.getY() + gameEngine.shotHeight < 0){
-                    gameEngine.shoot();
+                    gameEngine.shot.shoot();
                 }
             }
         }
