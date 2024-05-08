@@ -61,7 +61,31 @@ public class SceneBuilder {
         }
 
         gameEngine.viewShot = new ImageView(gameEngine.shot);
+        gameEngine.viewShot.setY(-100);
+        gameEngine.viewShot.setX(0);
         gameEngine.viewShot.toFront();
+    }
+
+    public void resetImgShot(){
+        gameEngine.viewShot.setY(-100);
+        gameEngine.viewShot.setX(0);
+    }
+
+    public void setImgEnemy(String src){
+        try {
+            gameEngine.enemies = new Image(new FileInputStream((src)));
+        } catch (FileNotFoundException ignored){
+            System.out.println("test");
+        }
+
+        gameEngine.viewEnemies = new ImageView(gameEngine.enemies);
+        gameEngine.viewEnemies.toFront();
+        System.out.println("test!");
+    }
+
+    public void resetImgEnemy() {
+        gameEngine.viewEnemies.setX(0);
+        gameEngine.viewEnemies.setY(-200);
     }
 
     public void setPlayButton(){

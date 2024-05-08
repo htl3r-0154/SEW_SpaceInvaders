@@ -23,6 +23,7 @@ public class GameEngine extends Application {
     public SceneBuilder sceneBuilder;
     public Sound sound;
     public EventHandler eventHandler;
+    public Enemy enemy;
     public double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
@@ -30,17 +31,21 @@ public class GameEngine extends Application {
     public Image menu = null;
     public Image background = null;
     public Image shot = null;
-    public double shotWidth = 32;
-    public double shotHeight = 32;
+    public double shotWidth = 8;
+    public double shotHeight = 24;
     public double shotSpeed = 10;
     public Image spaceship = null;
     public double spaceshipWidth = 120;
     public double spaceshipHeight = 120;
     public double spaceshipSpeed = 20;
+    public Image enemies = null;
+    public double enemy3Width = 60;
+    public double enemy3Height = 60;
     public ImageView viewMenu;
     public ImageView viewBackground;
     public ImageView viewSpaceship;
     public ImageView viewShot;
+    public ImageView viewEnemies;
     public Stage stage;
     public Group root = new Group();
     public Scene scene = new Scene(root);
@@ -62,6 +67,7 @@ public class GameEngine extends Application {
         this.stage.setWidth(screenWidth);
         this.stage.setHeight(screenHeight);
         this.stage.getIcons().add(new Image("file:src/main/resources/Images/space-invaders.png"));
+        this.enemy = new Enemy(this);
         this.sceneBuilder = new SceneBuilder(this);
         this.sound = new Sound(this);
         this.eventHandler = new EventHandler(this, sound, sceneBuilder);
@@ -110,6 +116,25 @@ public class GameEngine extends Application {
 
     public void updateShot() {
         viewShot.setY(viewShot.getY() - shotSpeed);
+
+        collisionCheck();
+    }
+
+    public void collisionCheck() {
+        for (int i = 0; i < shotWidth; i++) {
+            for (int j = 0; j < enemy3Width; j++) {
+                if (viewShot.getX() + i == viewEnemies.getX() + j){
+                    for (int k = 0; k < enemy3Height; k++) {
+                        for (int l = 0; l < shotHeight; l++) {
+                            if (viewShot.getY() + l == viewEnemies.getY() + k){
+                                sceneBuilder.resetImgEnemy();
+                                sceneBuilder.resetImgShot();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {

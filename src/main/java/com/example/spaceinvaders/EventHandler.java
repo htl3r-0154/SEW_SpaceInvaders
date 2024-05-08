@@ -31,31 +31,33 @@ public class EventHandler {
         gameEngine.viewBackground.setFitWidth(gameEngine.stage.getWidth());
         gameEngine.viewBackground.setLayoutX(0);
         gameEngine.viewBackground.setLayoutY(0);
-        gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceship.getWidth() / 2);
+        gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceshipWidth / 2);
         gameEngine.viewSpaceship.setY(gameEngine.stage.getHeight() - 180);
 
-        sceneBuilder.setImgShot("src/main/resources/Images/Shot1.png");
-        gameEngine.viewShot.setY(-100);
-        gameEngine.viewShot.setX(0);
+        gameEngine.sceneBuilder.setImgEnemy("src/main/resources/Images/Enemy3.png");
+        gameEngine.viewEnemies.setX(gameEngine.screenWidth / 2 - gameEngine.enemy3Width / 2);
+        gameEngine.viewEnemies.setY(100);
+
+        sceneBuilder.setImgShot("src/main/resources/Images/Shot1_1.png");
 
         gameEngine.scene.setOnKeyPressed(this::keyPressed);
 
-        gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship);
+        gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship, gameEngine.viewEnemies);
     }
 
     public void keyPressed(KeyEvent e){
         switch (e.getCode()) {
-            case LEFT -> {
+            case LEFT, A-> {
                 if (!(gameEngine.viewSpaceship.getX() < (gameEngine.screenWidth * 0.02))) {
                     gameEngine.viewSpaceship.setX(gameEngine.viewSpaceship.getX() - gameEngine.spaceshipSpeed) ;
                 }
             }
-            case RIGHT -> {
+            case RIGHT, D -> {
                 if (!(gameEngine.viewSpaceship.getX() + gameEngine.spaceshipWidth > gameEngine.screenWidth - (gameEngine.screenWidth * 0.02))) {
                     gameEngine.viewSpaceship.setX(gameEngine.viewSpaceship.getX() + gameEngine.spaceshipSpeed);
                 }
             }
-            case UP -> {
+            case UP, W, SPACE -> {
                 if (gameEngine.viewShot.getY() + gameEngine.shotHeight < 0){
                     gameEngine.shoot();
                 }
