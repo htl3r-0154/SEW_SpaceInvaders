@@ -1,7 +1,5 @@
 package com.example.spaceinvaders;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -11,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import java.awt.*;
 
 //TODO add FileReader for Highscore
@@ -25,23 +22,23 @@ public class GameEngine extends Application {
     public EventHandler eventHandler;
     public Enemy enemy;
     public Shot shot;
-    public double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    public double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+    public final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    public final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
     public Button quitButton = new Button("QUIT");
     public Image menuImg = null;
     public Image backgroundImg = null;
     public Image shotImg = null;
-    public double shotWidth = 8;
-    public double shotHeight = 24;
-    public double shotSpeed = 10;
+    public final double shotWidth = 8;
+    public final double shotHeight = 24;
+    public int shotSpeed;
     public Image spaceshipImg = null;
-    public double spaceshipWidth = 120;
-    public double spaceshipHeight = 120;
-    public double spaceshipSpeed = 20;
+    public final double spaceshipWidth = 120;
+    public final double spaceshipHeight = 120;
+    public final double spaceshipSpeed = 20;
     public Image enemiesImg = null;
-    public double enemy3Width = 60;
-    public double enemy3Height = 60;
+    public final double enemy3Width = 60;
+    public final double enemy3Height = 60;
     public ImageView viewMenu;
     public ImageView viewBackground;
     public ImageView viewSpaceship;
@@ -53,7 +50,7 @@ public class GameEngine extends Application {
     public MediaPlayer mediaPlayer2;
     public MediaPlayer mediaPlayer1;
     public MediaPlayer shotSoundSFX;
-    public boolean is4k = screenHeight >= 1430.0;
+    public final boolean is4k = screenHeight >= 1430.0;
     public boolean first = true;
 
     @Override

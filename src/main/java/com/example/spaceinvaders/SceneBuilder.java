@@ -61,8 +61,7 @@ public class SceneBuilder {
         }
 
         gameEngine.viewShot = new ImageView(gameEngine.shotImg);
-        gameEngine.viewShot.setY(-100);
-        gameEngine.viewShot.setX(0);
+        resetImgShot();
         gameEngine.viewShot.toFront();
     }
 

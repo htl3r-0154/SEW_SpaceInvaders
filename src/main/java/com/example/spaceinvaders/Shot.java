@@ -7,25 +7,25 @@ import javafx.util.Duration;
 public class Shot {
     public GameEngine gameEngine;
     public double posX;
-
+    public double trueHeight;
 
     public Shot(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
     }
 
     public void shoot(){
-        posX = gameEngine.viewSpaceship.getX() + (gameEngine.spaceshipWidth / 2) - (gameEngine.shotWidth / 2);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> updateShot()));
+        trueHeight = gameEngine.screenHeight - 145;
 
-        if (gameEngine.is4k){
-            timeline.setCycleCount(132); // Height = 24 | Speed = 1000px/s | ScreenHeight = 1440px
-        } else {
-            timeline.setCycleCount(100);
-        }
+        gameEngine.shotSpeed = (int) (trueHeight / 1.44) / 100;
+
+        posX = gameEngine.viewSpaceship.getX() + (gameEngine.spaceshipWidth / 2) - (gameEngine.shotWidth / 2);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> updateShot()));
+        timeline.setCycleCount((int) (trueHeight / gameEngine.shotSpeed) + 5);
         timeline.play();
 
         gameEngine.viewShot.setX(posX);
-        gameEngine.viewShot.setY(gameEngine.screenHeight - 145);
+        gameEngine.viewShot.setY(trueHeight);
 
         gameEngine.sound.shotSound("src/main/resources/Sounds/Laser Shot.mp3");
 
@@ -37,6 +37,9 @@ public class Shot {
 
     public void updateShot() {
         gameEngine.viewShot.setY(gameEngine.viewShot.getY() - gameEngine.shotSpeed);
+        if (gameEngine.viewShot.getY() + gameEngine.shotHeight - 12 < 0){
+            gameEngine.sceneBuilder.resetImgShot();
+        }
         gameEngine.collisionCheck();
     }
 }

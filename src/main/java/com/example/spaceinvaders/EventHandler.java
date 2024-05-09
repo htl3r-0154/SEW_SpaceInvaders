@@ -31,8 +31,9 @@ public class EventHandler {
         gameEngine.viewBackground.setFitWidth(gameEngine.stage.getWidth());
         gameEngine.viewBackground.setLayoutX(0);
         gameEngine.viewBackground.setLayoutY(0);
+
         gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceshipWidth / 2);
-        gameEngine.viewSpaceship.setY(gameEngine.stage.getHeight() - gameEngine.spaceshipHeight - 60);
+        gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - 60);
 
         gameEngine.sceneBuilder.setImgEnemy("src/main/resources/Images/Enemy3.png");
         gameEngine.viewEnemies.setX(gameEngine.screenWidth / 2 - gameEngine.enemy3Width / 2);
