@@ -38,8 +38,13 @@ public class Shot {
     public void updateShot() {
         gameEngine.viewShot.setY(gameEngine.viewShot.getY() - gameEngine.shotSpeed);
         if (gameEngine.viewShot.getY() + gameEngine.shotHeight - 12 < 0){
-            gameEngine.sceneBuilder.resetImgShot();
+            resetImgShot();
         }
         gameEngine.collisionCheck();
+    }
+
+    public void resetImgShot(){
+        gameEngine.viewShot.setY(-100);
+        gameEngine.viewShot.setX(0);
     }
 }

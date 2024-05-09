@@ -35,9 +35,17 @@ public class EventHandler {
         gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceshipWidth / 2);
         gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - 60);
 
-        gameEngine.sceneBuilder.setImgEnemy("src/main/resources/Images/Enemy3.png");
-        gameEngine.viewEnemies.setX(gameEngine.screenWidth / 2 - gameEngine.enemy3Width / 2);
-        gameEngine.viewEnemies.setY(100);
+        gameEngine.sceneBuilder.setImgEnemy1("src/main/resources/Images/Enemy1.png");
+        gameEngine.viewEnemy1.setX(gameEngine.screenWidth / 2 - gameEngine.enemyWidth / 2);
+        gameEngine.viewEnemy1.setY(100);
+
+        gameEngine.sceneBuilder.setImgEnemy3("src/main/resources/Images/Enemy3.png");
+        gameEngine.viewEnemy3.setX(gameEngine.screenWidth / 2 - gameEngine.enemyWidth / 2);
+        gameEngine.viewEnemy3.setY(200);
+
+        gameEngine.sceneBuilder.setImgEnemy2("src/main/resources/Images/Enemy2.png");
+        gameEngine.viewEnemy2.setX(gameEngine.screenWidth / 2 - gameEngine.enemyWidth / 2);
+        gameEngine.viewEnemy2.setY(300);
 
         gameEngine.initEnemy();
         gameEngine.initShot();
@@ -46,7 +54,7 @@ public class EventHandler {
 
         gameEngine.scene.setOnKeyPressed(this::keyPressed);
 
-        gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship, gameEngine.viewEnemies);
+        gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship,gameEngine.viewEnemy1, gameEngine.viewEnemy2, gameEngine.viewEnemy3);
     }
 
     public void keyPressed(KeyEvent e){

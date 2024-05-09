@@ -61,29 +61,40 @@ public class SceneBuilder {
         }
 
         gameEngine.viewShot = new ImageView(gameEngine.shotImg);
-        resetImgShot();
+        gameEngine.shot.resetImgShot();
         gameEngine.viewShot.toFront();
     }
 
-    public void resetImgShot(){
-        gameEngine.viewShot.setY(-100);
-        gameEngine.viewShot.setX(0);
-    }
-
-    public void setImgEnemy(String src){
+    public void setImgEnemy3(String src){
         try {
-            gameEngine.enemiesImg = new Image(new FileInputStream((src)));
+            gameEngine.enemy3Img = new Image(new FileInputStream((src)));
         } catch (FileNotFoundException ignored){
         }
 
-        gameEngine.viewEnemies = new ImageView(gameEngine.enemiesImg);
-        gameEngine.viewEnemies.toFront();
+        gameEngine.viewEnemy3 = new ImageView(gameEngine.enemy3Img);
+        gameEngine.viewEnemy3.toFront();
     }
 
-    public void resetImgEnemy() {
-        gameEngine.viewEnemies.setX(0);
-        gameEngine.viewEnemies.setY(-200);
+    public void setImgEnemy2(String src){
+        try {
+            gameEngine.enemy2Img = new Image(new FileInputStream((src)));
+        } catch (FileNotFoundException ignored){
+        }
+
+        gameEngine.viewEnemy2 = new ImageView(gameEngine.enemy2Img);
+        gameEngine.viewEnemy2.toFront();
     }
+
+    public void setImgEnemy1(String src){
+        try {
+            gameEngine.enemy1Img = new Image(new FileInputStream((src)));
+        } catch (FileNotFoundException ignored){
+        }
+
+        gameEngine.viewEnemy1 = new ImageView(gameEngine.enemy1Img);
+        gameEngine.viewEnemy1.toFront();
+    }
+
 
     public void setPlayButton(){
         gameEngine.playButton.setPrefSize(450, 75);

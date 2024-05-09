@@ -36,14 +36,18 @@ public class GameEngine extends Application {
     public final double spaceshipWidth = 120;
     public final double spaceshipHeight = 120;
     public final double spaceshipSpeed = 20;
-    public Image enemiesImg = null;
-    public final double enemy3Width = 60;
-    public final double enemy3Height = 60;
+    public Image enemy1Img = null;
+    public Image enemy2Img = null;
+    public Image enemy3Img = null;
+    public final double enemyWidth = 60;
+    public final double enemyHeight = 60;
     public ImageView viewMenu;
     public ImageView viewBackground;
     public ImageView viewSpaceship;
     public ImageView viewShot;
-    public ImageView viewEnemies;
+    public ImageView viewEnemy1;
+    public ImageView viewEnemy2;
+    public ImageView viewEnemy3;
     public Stage stage;
     public Group root = new Group();
     public Scene scene = new Scene(root);
@@ -99,14 +103,20 @@ public class GameEngine extends Application {
 
 
     public void collisionCheck() {
+        collisionCheck(viewEnemy3);
+        collisionCheck(viewEnemy2);
+        collisionCheck(viewEnemy1);
+    }
+
+    private void collisionCheck(ImageView viewEnemy) {
         for (int i = 0; i < shotWidth; i++) {
-            for (int j = 0; j < enemy3Width; j++) {
-                if (viewShot.getX() + i == viewEnemies.getX() + j){
-                    for (int k = 0; k < enemy3Height; k++) {
+            for (int j = 0; j < enemyWidth; j++) {
+                if (viewShot.getX() + i == viewEnemy.getX() + j){
+                    for (int k = 0; k < enemyHeight; k++) {
                         for (int l = 0; l < shotHeight; l++) {
-                            if (viewShot.getY() + l == viewEnemies.getY() + k){
-                                sceneBuilder.resetImgEnemy();
-                                sceneBuilder.resetImgShot();
+                            if (viewShot.getY() + l == viewEnemy.getY() + k){
+                                enemy.resetImgEnemy(viewEnemy);
+                                shot.resetImgShot();
                             }
                         }
                     }
