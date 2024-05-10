@@ -8,6 +8,7 @@ public class Shot {
     public GameEngine gameEngine;
     public double posX;
     public double trueHeight;
+    public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> updateShot()));
 
     public Shot(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
@@ -20,8 +21,7 @@ public class Shot {
 
         posX = gameEngine.viewSpaceship.getX() + (gameEngine.spaceshipWidth / 2) - (gameEngine.shotWidth / 2);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> updateShot()));
-        timeline.setCycleCount((int) (trueHeight / gameEngine.shotSpeed) + 5);
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
         gameEngine.viewShot.setX(posX);

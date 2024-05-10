@@ -26,5 +26,6 @@ public class Enemy {
     public void resetImgEnemy(ImageView viewEnemy) {
         viewEnemy.setX(0);
         viewEnemy.setY(-200);
+        viewEnemy.setVisible(false);
     }
 }

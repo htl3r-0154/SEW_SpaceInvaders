@@ -101,12 +101,12 @@ public class GameEngine extends Application {
     }
 
     private void collisionCheck(ImageView viewEnemy, int index) {
-        double leftX = viewShot.getX() + ;
         double rightX = viewShot.getX() + shotWidth;
-        double topY = viewShot.getY();
+        double leftX = viewShot.getX();
         double bottomY = viewShot.getY() + shotHeight;
-        if (leftX >= viewEnemy.getX() && rightX <= viewEnemy.getX() + enemyWidth) {
-            if (topY >= viewEnemy.getY() && bottomY <= viewEnemy.getY() + enemyHeight) {
+        double topY = viewShot.getY();
+        if (rightX >= viewEnemy.getX() && leftX <= viewEnemy.getX() + enemyWidth) {
+            if (bottomY >= viewEnemy.getY() && topY <= viewEnemy.getY() + enemyHeight) {
                 shot.resetImgShot();
                 enemies.get(index).resetImgEnemy(viewEnemy);
             }

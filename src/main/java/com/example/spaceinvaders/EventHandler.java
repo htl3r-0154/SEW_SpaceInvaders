@@ -67,6 +67,7 @@ public class EventHandler {
             }
             case UP, W, SPACE -> {
                 if (gameEngine.viewShot.getY() + gameEngine.shotHeight < 0){
+                    gameEngine.shot.timeline.stop();
                     gameEngine.shot.shoot();
                 }
             }
