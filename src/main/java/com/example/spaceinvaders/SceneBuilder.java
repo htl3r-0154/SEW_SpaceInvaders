@@ -65,37 +65,6 @@ public class SceneBuilder {
         gameEngine.viewShot.toFront();
     }
 
-    public void setImgEnemy3(String src){
-        try {
-            gameEngine.enemy3Img = new Image(new FileInputStream((src)));
-        } catch (FileNotFoundException ignored){
-        }
-
-        gameEngine.viewEnemy3 = new ImageView(gameEngine.enemy3Img);
-        gameEngine.viewEnemy3.toFront();
-    }
-
-    public void setImgEnemy2(String src){
-        try {
-            gameEngine.enemy2Img = new Image(new FileInputStream((src)));
-        } catch (FileNotFoundException ignored){
-        }
-
-        gameEngine.viewEnemy2 = new ImageView(gameEngine.enemy2Img);
-        gameEngine.viewEnemy2.toFront();
-    }
-
-    public void setImgEnemy1(String src){
-        try {
-            gameEngine.enemy1Img = new Image(new FileInputStream((src)));
-        } catch (FileNotFoundException ignored){
-        }
-
-        gameEngine.viewEnemy1 = new ImageView(gameEngine.enemy1Img);
-        gameEngine.viewEnemy1.toFront();
-    }
-
-
     public void setPlayButton(){
         gameEngine.playButton.setPrefSize(450, 75);
         gameEngine.playButton.setLayoutX(gameEngine.stage.getWidth() / 2 - gameEngine.playButton.getPrefWidth() / 2);

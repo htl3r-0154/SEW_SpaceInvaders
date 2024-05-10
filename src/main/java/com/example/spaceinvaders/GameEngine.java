@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import java.awt.*;
+import java.util.ArrayList;
 
 //TODO add FileReader for Highscore
 //TODO Display Highscore
@@ -35,19 +36,14 @@ public class GameEngine extends Application {
     public Image spaceshipImg = null;
     public final double spaceshipWidth = 120;
     public final double spaceshipHeight = 120;
-    public final double spaceshipSpeed = 20;
-    public Image enemy1Img = null;
-    public Image enemy2Img = null;
-    public Image enemy3Img = null;
+    public final double spaceshipSpeed = 20;;
     public final double enemyWidth = 60;
     public final double enemyHeight = 60;
     public ImageView viewMenu;
     public ImageView viewBackground;
     public ImageView viewSpaceship;
     public ImageView viewShot;
-    public ImageView viewEnemy1;
-    public ImageView viewEnemy2;
-    public ImageView viewEnemy3;
+    public ArrayList<Enemy> enemies = new ArrayList<>();
     public Stage stage;
     public Group root = new Group();
     public Scene scene = new Scene(root);
@@ -93,34 +89,26 @@ public class GameEngine extends Application {
         this.stage.show();
     }
 
-    public void initEnemy(){
-        this.enemy = new Enemy(this);
-    }
-
     public void initShot(){
         this.shot = new Shot(this);
     }
 
 
     public void collisionCheck() {
-        collisionCheck(viewEnemy3);
-        collisionCheck(viewEnemy2);
-        collisionCheck(viewEnemy1);
+        for (int i = 0; i < enemies.size(); i++) {
+            collisionCheck(enemies.get(i).view, i);
+        }
     }
 
-    private void collisionCheck(ImageView viewEnemy) {
-        for (int i = 0; i < shotWidth; i++) {
-            for (int j = 0; j < enemyWidth; j++) {
-                if (viewShot.getX() + i == viewEnemy.getX() + j){
-                    for (int k = 0; k < enemyHeight; k++) {
-                        for (int l = 0; l < shotHeight; l++) {
-                            if (viewShot.getY() + l == viewEnemy.getY() + k){
-                                enemy.resetImgEnemy(viewEnemy);
-                                shot.resetImgShot();
-                            }
-                        }
-                    }
-                }
+    private void collisionCheck(ImageView viewEnemy, int index) {
+        double leftX = viewShot.getX() + ;
+        double rightX = viewShot.getX() + shotWidth;
+        double topY = viewShot.getY();
+        double bottomY = viewShot.getY() + shotHeight;
+        if (leftX >= viewEnemy.getX() && rightX <= viewEnemy.getX() + enemyWidth) {
+            if (topY >= viewEnemy.getY() && bottomY <= viewEnemy.getY() + enemyHeight) {
+                shot.resetImgShot();
+                enemies.get(index).resetImgEnemy(viewEnemy);
             }
         }
     }
