@@ -52,7 +52,7 @@ public class EventHandler {
             }
         }
     }
-
+//TODO: not use switch cases for movement (reason: performance and cant move while shooting)
     public void keyPressed(KeyEvent e){
         switch (e.getCode()) {
             case LEFT, A-> {

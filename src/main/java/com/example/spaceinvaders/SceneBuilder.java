@@ -9,6 +9,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
@@ -16,11 +18,12 @@ import java.io.FileNotFoundException;
 
 public class SceneBuilder {
     public GameEngine gameEngine;
-    public SceneBuilder(GameEngine gameEngine){
+
+    public SceneBuilder(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
     }
 
-    public void setImgMenu(Image image, String src){
+    public void setImgMenu(Image image, String src) {
         try {
             image = new Image(new FileInputStream(src));
         } catch (FileNotFoundException ignored) {
@@ -29,7 +32,7 @@ public class SceneBuilder {
         gameEngine.viewMenu.toFront();
     }
 
-    public void setImgBackground(Image image, String src){
+    public void setImgBackground(Image image, String src) {
         try {
             image = new Image(new FileInputStream(src));
         } catch (FileNotFoundException ignored) {
@@ -38,10 +41,10 @@ public class SceneBuilder {
         gameEngine.viewBackground.toFront();
     }
 
-    public void setImgSpaceship(String src){
+    public void setImgSpaceship(String src) {
         try {
             gameEngine.spaceshipImg = new Image(new FileInputStream(src));
-        } catch (FileNotFoundException ignored){
+        } catch (FileNotFoundException ignored) {
         }
 
         gameEngine.viewSpaceship = new ImageView(gameEngine.spaceshipImg);
@@ -54,7 +57,7 @@ public class SceneBuilder {
         fade.play();
     }
 
-    public void setImgShot(String src){
+    public void setImgShot(String src) {
         try {
             gameEngine.shotImg = new Image((new FileInputStream(src)));
         } catch (FileNotFoundException ignored) {
@@ -65,7 +68,7 @@ public class SceneBuilder {
         gameEngine.viewShot.toFront();
     }
 
-    public void setPlayButton(){
+    public void setPlayButton() {
         gameEngine.playButton.setPrefSize(450, 75);
         gameEngine.playButton.setLayoutX(gameEngine.stage.getWidth() / 2 - gameEngine.playButton.getPrefWidth() / 2);
         if (!gameEngine.is4k) {
@@ -86,7 +89,7 @@ public class SceneBuilder {
         });
     }
 
-    public void setExitButton(){
+    public void setExitButton() {
         gameEngine.quitButton.setPrefSize(450, 75);
         gameEngine.quitButton.setLayoutX(gameEngine.stage.getWidth() / 2 - gameEngine.quitButton.getPrefWidth() / 2);
         if (!gameEngine.is4k) {
@@ -106,6 +109,14 @@ public class SceneBuilder {
         gameEngine.viewMenu.setFitWidth(gameEngine.stage.getWidth());
         gameEngine.viewMenu.setLayoutX(0);
         gameEngine.viewMenu.setLayoutY(0);
+    }
+
+    public void setScore() {
+        gameEngine.highscoreText.setTextAlignment(TextAlignment.RIGHT);
+        gameEngine.highscoreText.setX(1600);
+        gameEngine.highscoreText.setY(60);
+        gameEngine.highscoreText.setFont(new Font(40));
+        gameEngine.highscoreText.setFill(Color.WHITE);
     }
 }
 

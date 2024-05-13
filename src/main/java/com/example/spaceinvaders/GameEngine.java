@@ -8,12 +8,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.awt.*;
 import java.util.ArrayList;
 
 //TODO add FileReader for Highscore
-//TODO Display Highscore
+//TODO Display score & highscore
+//TODO if score highscore then save to /resources/Gamedata/Highscore
 //TODO add Enemy's to hit with Hitbox
 //TODO add Bunkers with Hitbox to protect Spaceship
 
@@ -23,6 +25,7 @@ public class GameEngine extends Application {
     public EventHandler eventHandler;
     public Enemy enemy;
     public Shot shot;
+    //public HighScoreReader highScoreReader;
     public final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
@@ -52,7 +55,8 @@ public class GameEngine extends Application {
     public MediaPlayer shotSoundSFX;
     public final boolean is4k = screenHeight >= 1430.0;
     public boolean first = true;
-
+    public int highscore = HighScoreReader.getHighscore();
+    public Text highscoreText = new Text("Highscore: "+ highscore);
     @Override
     public void start(Stage stage) {
         this.stage = stage;
@@ -68,7 +72,8 @@ public class GameEngine extends Application {
         this.sceneBuilder = new SceneBuilder(this);
         this.sound = new Sound(this);
         this.eventHandler = new EventHandler(this, sound, sceneBuilder);
-
+        //Create Score
+        sceneBuilder.setScore();
         //Create PlayButton
         sceneBuilder.setPlayButton();
 
@@ -79,8 +84,8 @@ public class GameEngine extends Application {
         sceneBuilder.setMenu();
 
         //Add to root
-        root.getChildren().addAll(viewMenu);
-        root.getChildren().addAll(playButton, quitButton);
+        root.getChildren().addAll(viewMenu, playButton, quitButton, highscoreText);
+        root.getChildren().addAll();
 
         //Add music
         sound.music2("src/main/resources/Sounds/Harvest Dawn.mp3");
@@ -109,6 +114,7 @@ public class GameEngine extends Application {
             if (bottomY >= viewEnemy.getY() && topY <= viewEnemy.getY() + enemyHeight) {
                 shot.resetImgShot();
                 enemies.get(index).resetImgEnemy(viewEnemy);
+                highscore += 10;
             }
         }
     }
