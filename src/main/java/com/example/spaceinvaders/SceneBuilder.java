@@ -113,7 +113,7 @@ public class SceneBuilder {
 
     public void setScore() {
         gameEngine.highscoreText.setTextAlignment(TextAlignment.RIGHT);
-        gameEngine.highscoreText.setX(1600);
+        gameEngine.highscoreText.setX(gameEngine.screenWidth - 400);
         gameEngine.highscoreText.setY(60);
         gameEngine.highscoreText.setFont(new Font(40));
         gameEngine.highscoreText.setFill(Color.WHITE);

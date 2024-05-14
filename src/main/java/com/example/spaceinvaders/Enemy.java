@@ -13,6 +13,7 @@ public class Enemy {
     public Image[] images = new Image[]{new Image("file:src/main/resources/Images/Enemy1.png"), new Image("file:src/main/resources/Images/Enemy2.png"), new Image("file:src/main/resources/Images/Enemy3.png")};
     public Image image;
     public ImageView view;
+    public int enemiesLeft = 24;
     public int moveCounter = 0;
     public boolean first = true;
     public int speed = 1000;
@@ -33,8 +34,8 @@ public class Enemy {
         timeline.play();
     }
 
-    public void checkSpeed(){
-        switch (gameEngine.enemies.size()){
+    public void checkEnemiesLeft(){
+        switch (enemiesLeft){
             case 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24:
                 speed = 750;
                 break;
@@ -60,11 +61,22 @@ public class Enemy {
     }
 
     private void updateEnemies() {
-        checkSpeed();
+        checkEnemiesLeft();
+
         if (first) {
             for (int i = 0; i < gameEngine.enemies.size(); i++) {
-                gameEngine.enemies.get(i);
+                gameEngine.enemies.get(i).view.setX(gameEngine.enemies.get(i).view.getX() - 1);
             }
+            moveCounter++;
+        } else {
+            for (int i = 0; i < gameEngine.enemies.size(); i++) {
+                gameEngine.enemies.get(i).view.setX(gameEngine.enemies.get(i).view.getX() + 1);
+            }
+        }
+
+        if (first && moveCounter == 6) {
+            first = false;
+            moveCounter = 0;
         }
     }
 }

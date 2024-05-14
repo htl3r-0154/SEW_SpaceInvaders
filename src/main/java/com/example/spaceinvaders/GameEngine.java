@@ -74,6 +74,7 @@ public class GameEngine extends Application {
         this.eventHandler = new EventHandler(this, sound, sceneBuilder);
         //Create Score
         sceneBuilder.setScore();
+
         //Create PlayButton
         sceneBuilder.setPlayButton();
 
@@ -113,6 +114,7 @@ public class GameEngine extends Application {
             if (bottomY >= viewEnemy.getY() && topY <= viewEnemy.getY() + enemyHeight) {
                 shot.resetImgShot();
                 enemies.get(index).resetImgEnemy(viewEnemy);
+                //enemy.enemiesLeft--;
                 score += 10;
                 System.out.println(score);
             }
