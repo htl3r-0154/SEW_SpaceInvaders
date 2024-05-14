@@ -1,8 +1,12 @@
 package com.example.spaceinvaders;
 
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
-public class EventHandler {
+public class EventHandler extends GameEngine {
     SceneBuilder sceneBuilder;
     GameEngine gameEngine;
     Sound sound;
@@ -31,16 +35,11 @@ public class EventHandler {
         gameEngine.viewBackground.setFitWidth(gameEngine.stage.getWidth());
         gameEngine.viewBackground.setLayoutX(0);
         gameEngine.viewBackground.setLayoutY(0);
-
         gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceshipWidth / 2);
         gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - 60);
-
         gameEngine.initShot();
-
         sceneBuilder.setImgShot("src/main/resources/Images/Shot1_1.png");
-
         gameEngine.scene.setOnKeyPressed(this::keyPressed);
-
         gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship);
 
         for (int i = 0; i < 3; i++) {
@@ -73,5 +72,4 @@ public class EventHandler {
             }
         }
     }
-
 }

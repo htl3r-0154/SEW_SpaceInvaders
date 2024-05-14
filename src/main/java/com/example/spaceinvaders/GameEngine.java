@@ -20,12 +20,12 @@ import java.util.ArrayList;
 //TODO add Bunkers with Hitbox to protect Spaceship
 
 public class GameEngine extends Application {
+    public int score = 0;
     public SceneBuilder sceneBuilder;
     public Sound sound;
     public EventHandler eventHandler;
     public Enemy enemy;
     public Shot shot;
-    //public HighScoreReader highScoreReader;
     public final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
@@ -85,7 +85,6 @@ public class GameEngine extends Application {
 
         //Add to root
         root.getChildren().addAll(viewMenu, playButton, quitButton, highscoreText);
-        root.getChildren().addAll();
 
         //Add music
         sound.music2("src/main/resources/Sounds/Harvest Dawn.mp3");
@@ -114,7 +113,8 @@ public class GameEngine extends Application {
             if (bottomY >= viewEnemy.getY() && topY <= viewEnemy.getY() + enemyHeight) {
                 shot.resetImgShot();
                 enemies.get(index).resetImgEnemy(viewEnemy);
-                highscore += 10;
+                score += 10;
+                System.out.println(score);
             }
         }
     }
