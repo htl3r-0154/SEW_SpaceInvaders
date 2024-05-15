@@ -13,11 +13,7 @@ public class Enemy {
     public Image[] images = new Image[]{new Image("file:src/main/resources/Images/Enemy1.png"), new Image("file:src/main/resources/Images/Enemy2.png"), new Image("file:src/main/resources/Images/Enemy3.png")};
     public Image image;
     public ImageView view;
-    public int enemiesLeft = 24;
-    public int moveCounter = 0;
-    public boolean first = true;
     public int speed = 1000;
-    public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(speed), e -> updateEnemies()));
 
     public Enemy(GameEngine gameEngine, int row, int col) {
         this.gameEngine = gameEngine;
@@ -29,30 +25,9 @@ public class Enemy {
         this.view.setY(posY);
         this.view.setFitWidth(gameEngine.enemyWidth);
         this.view.setFitHeight(gameEngine.enemyHeight);
-
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
     }
 
-    public void checkEnemiesLeft(){
-        switch (enemiesLeft){
-            case 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24:
-                speed = 750;
-                break;
-            case 10, 11, 12, 13:
-                speed = 600;
-                break;
-            case 5, 6, 7, 8, 9:
-                speed = 500;
-                break;
-            case 3, 4:
-                speed = 400;
-                break;
-            case 2, 1:
-                speed = 350;
-                break;
-        }
-    }
+
 
     public void resetImgEnemy(ImageView viewEnemy) {
         viewEnemy.setX(0);
@@ -60,23 +35,7 @@ public class Enemy {
         viewEnemy.setVisible(false);
     }
 
-    private void updateEnemies() {
-        checkEnemiesLeft();
 
-        if (first) {
-            for (int i = 0; i < gameEngine.enemies.size(); i++) {
-                gameEngine.enemies.get(i).view.setX(gameEngine.enemies.get(i).view.getX() - 1);
-            }
-            moveCounter++;
-        } else {
-            for (int i = 0; i < gameEngine.enemies.size(); i++) {
-                gameEngine.enemies.get(i).view.setX(gameEngine.enemies.get(i).view.getX() + 1);
-            }
-        }
 
-        if (first && moveCounter == 6) {
-            first = false;
-            moveCounter = 0;
-        }
-    }
+
 }

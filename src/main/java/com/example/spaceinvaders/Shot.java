@@ -29,9 +29,9 @@ public class Shot {
 
         gameEngine.sound.shotSound("src/main/resources/Sounds/Laser Shot.mp3");
 
-        if (gameEngine.first){
+        if (gameEngine.firstMovement){
             gameEngine.root.getChildren().add(gameEngine.viewShot);
-            gameEngine.first = false;
+            gameEngine.firstMovement = false;
         }
     }
 

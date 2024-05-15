@@ -1,5 +1,7 @@
 package com.example.spaceinvaders;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -10,6 +12,8 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -57,6 +61,12 @@ public class GameEngine extends Application {
     public boolean first = true;
     public int highscore = HighScoreReader.getHighscore();
     public Text highscoreText = new Text("Highscore: "+ highscore);
+    public int enemiesLeft = 24;
+    public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> updateEnemies()));
+    public int moveCounter = 5;
+    public boolean firstMovement = true;
+
+
     @Override
     public void start(Stage stage) {
         this.stage = stage;
@@ -114,10 +124,71 @@ public class GameEngine extends Application {
             if (bottomY >= viewEnemy.getY() && topY <= viewEnemy.getY() + enemyHeight) {
                 shot.resetImgShot();
                 enemies.get(index).resetImgEnemy(viewEnemy);
-                //enemy.enemiesLeft--;
+                enemiesLeft--;
+                checkEnemiesLeft();
                 score += 10;
                 System.out.println(score);
             }
+        }
+    }
+
+    public void checkEnemiesLeft(){
+        switch (enemiesLeft){
+            case 14, 15, 16, 17, 23:
+                timeline.stop();
+                timeline = new Timeline(new KeyFrame(Duration.millis(750), e -> updateEnemies()));
+                timeline.play();
+                System.out.println("test");
+                break;
+            case 10, 11, 12, 13:
+                timeline.stop();
+                timeline = new Timeline(new KeyFrame(Duration.millis(600), e -> updateEnemies()));
+                timeline.play();
+                break;
+            case 5, 6, 7, 8, 9:
+                timeline.stop();
+                timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> updateEnemies()));
+                timeline.play();
+                break;
+            case 3, 4:
+                timeline.stop();
+                timeline = new Timeline(new KeyFrame(Duration.millis(400), e -> updateEnemies()));
+                timeline.play();
+                break;
+            case 2, 1:
+                timeline.stop();
+                timeline = new Timeline(new KeyFrame(Duration.millis(250), e -> updateEnemies()));
+                timeline.play();
+                break;
+        }
+    }
+
+    private void updateEnemies() {
+        moveCounter++;
+
+        if (moveCounter != 11) {
+            if (firstMovement) {
+                for (int i = 0; i < enemies.size(); i++) {
+                    enemies.get(i).view.setX(enemies.get(i).view.getX() - 30);
+                }
+            } else {
+                for (int i = 0; i < enemies.size(); i++) {
+                    enemies.get(i).view.setX(enemies.get(i).view.getX() + 30);
+                }
+            }
+        } else {
+            updateEnemiesVertical();
+        }
+
+        if (moveCounter == 11) {
+            moveCounter = 0;
+            firstMovement = !firstMovement;
+        }
+    }
+
+    public void updateEnemiesVertical() {
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).view.setY(enemies.get(i).view.getY() + 100);
         }
     }
 

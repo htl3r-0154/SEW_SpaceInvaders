@@ -1,5 +1,6 @@
 package com.example.spaceinvaders;
 
+import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -50,6 +51,9 @@ public class EventHandler extends GameEngine {
                 enemy.view.toFront();
             }
         }
+
+        gameEngine.timeline.setCycleCount(Timeline.INDEFINITE);
+        gameEngine.timeline.play();
     }
 //TODO: not use switch cases for movement (reason: performance and cant move while shooting)
     public void keyPressed(KeyEvent e){
