@@ -1,10 +1,7 @@
 package com.example.spaceinvaders;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 
 public class Enemy {
     public GameEngine gameEngine;

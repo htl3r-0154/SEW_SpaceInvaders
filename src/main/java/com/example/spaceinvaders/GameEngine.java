@@ -56,7 +56,10 @@ public class GameEngine extends Application {
     public Scene scene = new Scene(root);
     public MediaPlayer mediaPlayer2;
     public MediaPlayer mediaPlayer1;
-    public MediaPlayer shotSoundSFX;
+    public MediaPlayer shotSFX;
+    public MediaPlayer explosionSFX1;
+    public MediaPlayer explosionSFX2;
+    public MediaPlayer explosionSFX3;
     public final boolean is4k = screenHeight >= 1430.0;
     public boolean first = true;
     public int highscore = HighScoreReader.getHighscore();
@@ -64,7 +67,7 @@ public class GameEngine extends Application {
     public int enemiesLeft = 24;
     public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> updateEnemies()));
     public int moveCounter = 5;
-    public boolean firstMovement = true;
+    public boolean movementLeft = true;
 
 
     @Override
@@ -124,6 +127,7 @@ public class GameEngine extends Application {
             if (bottomY >= viewEnemy.getY() && topY <= viewEnemy.getY() + enemyHeight) {
                 shot.resetImgShot();
                 enemies.get(index).resetImgEnemy(viewEnemy);
+                sound.explodeSound1("src/main/resources/Sounds/sinus-bomb.mp3");
                 enemiesLeft--;
                 checkEnemiesLeft();
                 score += 10;
@@ -134,11 +138,10 @@ public class GameEngine extends Application {
 
     public void checkEnemiesLeft(){
         switch (enemiesLeft){
-            case 14, 15, 16, 17, 23:
+            case 14, 15, 16, 17:
                 timeline.stop();
                 timeline = new Timeline(new KeyFrame(Duration.millis(750), e -> updateEnemies()));
                 timeline.play();
-                System.out.println("test");
                 break;
             case 10, 11, 12, 13:
                 timeline.stop();
@@ -167,7 +170,7 @@ public class GameEngine extends Application {
         moveCounter++;
 
         if (moveCounter != 11) {
-            if (firstMovement) {
+            if (movementLeft) {
                 for (int i = 0; i < enemies.size(); i++) {
                     enemies.get(i).view.setX(enemies.get(i).view.getX() - 30);
                 }
@@ -182,13 +185,13 @@ public class GameEngine extends Application {
 
         if (moveCounter == 11) {
             moveCounter = 0;
-            firstMovement = !firstMovement;
+            movementLeft = !movementLeft;
         }
     }
 
     public void updateEnemiesVertical() {
         for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).view.setY(enemies.get(i).view.getY() + 100);
+            enemies.get(i).view.setY(enemies.get(i).view.getY() + (screenWidth - spaceshipHeight) / 20);
         }
     }
 
