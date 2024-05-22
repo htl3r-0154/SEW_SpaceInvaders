@@ -3,6 +3,9 @@ package com.example.spaceinvaders;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Enemy {
     public GameEngine gameEngine;
     public double posX;
@@ -10,7 +13,6 @@ public class Enemy {
     public Image[] images = new Image[]{new Image("file:src/main/resources/Images/Enemy1.png"), new Image("file:src/main/resources/Images/Enemy2.png"), new Image("file:src/main/resources/Images/Enemy3.png")};
     public Image image;
     public ImageView view;
-    public int speed = 1000;
 
     public Enemy(GameEngine gameEngine, int row, int col) {
         this.gameEngine = gameEngine;
@@ -27,9 +29,15 @@ public class Enemy {
 
 
     public void resetImgEnemy(ImageView viewEnemy) {
-        viewEnemy.setX(0);
-        viewEnemy.setY(-200);
-        viewEnemy.setVisible(false);
+        ArrayList<Integer> availablePositions = new ArrayList<Integer>(Arrays.asList(120,180,240,300,360,420,480,560,600,660,720,780));
+        int generatePosition = availablePositions.get((int) (Math.random()*availablePositions.size()));
+        viewEnemy.setX(generatePosition);
+        availablePositions.remove(availablePositions.indexOf(generatePosition));
+        if(availablePositions.isEmpty()){
+            availablePositions.addAll(Arrays.asList(120,180,240,300,360,420,480,560,600,660,720,780));
+        }
+
+        viewEnemy.setY(-60);
     }
 
 

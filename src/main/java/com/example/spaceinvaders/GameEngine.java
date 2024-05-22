@@ -15,12 +15,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
+import java.security.Key;
 import java.util.ArrayList;
 
 //TODO add FileReader for Highscore
 //TODO Display score & highscore
 //TODO if score highscore then save to /resources/Gamedata/Highscore
-//TODO add Enemy's to hit with Hitbox
 //TODO add Bunkers with Hitbox to protect Spaceship
 
 public class GameEngine extends Application {
@@ -43,7 +43,8 @@ public class GameEngine extends Application {
     public Image spaceshipImg = null;
     public final double spaceshipWidth = 120;
     public final double spaceshipHeight = 120;
-    public final double spaceshipSpeed = 20;;
+    public final double spaceshipSpeed = 20;
+    ;
     public final double enemyWidth = 60;
     public final double enemyHeight = 60;
     public ImageView viewMenu;
@@ -63,7 +64,7 @@ public class GameEngine extends Application {
     public final boolean is4k = screenHeight >= 1430.0;
     public boolean first = true;
     public int highscore = HighScoreReader.getHighscore();
-    public Text highscoreText = new Text("Highscore: "+ highscore);
+    public Text highscoreText = new Text("Highscore: " + highscore);
     public int enemiesLeft = 24;
     public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> updateEnemies()));
     public int moveCounter = 5;
@@ -107,7 +108,7 @@ public class GameEngine extends Application {
         this.stage.show();
     }
 
-    public void initShot(){
+    public void initShot() {
         this.shot = new Shot(this);
     }
 
@@ -136,34 +137,10 @@ public class GameEngine extends Application {
         }
     }
 
-    public void checkEnemiesLeft(){
-        switch (enemiesLeft){
-            case 14, 15, 16, 17:
-                timeline.stop();
-                timeline = new Timeline(new KeyFrame(Duration.millis(750), e -> updateEnemies()));
-                timeline.play();
-                break;
-            case 10, 11, 12, 13:
-                timeline.stop();
-                timeline = new Timeline(new KeyFrame(Duration.millis(600), e -> updateEnemies()));
-                timeline.play();
-                break;
-            case 5, 6, 7, 8, 9:
-                timeline.stop();
-                timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> updateEnemies()));
-                timeline.play();
-                break;
-            case 3, 4:
-                timeline.stop();
-                timeline = new Timeline(new KeyFrame(Duration.millis(400), e -> updateEnemies()));
-                timeline.play();
-                break;
-            case 2, 1:
-                timeline.stop();
-                timeline = new Timeline(new KeyFrame(Duration.millis(250), e -> updateEnemies()));
-                timeline.play();
-                break;
-        }
+    public void checkEnemiesLeft() {
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(750), e -> updateEnemies());
+        timeline.play();
+        timeline = new Timeline(keyFrame);
     }
 
     private void updateEnemies() {
@@ -179,19 +156,14 @@ public class GameEngine extends Application {
                     enemies.get(i).view.setX(enemies.get(i).view.getX() + 30);
                 }
             }
-        } else {
-            updateEnemiesVertical();
+        } else {//go vertical
+            for (int i = 0; i < enemies.size(); i++) {
+                enemies.get(i).view.setY(enemies.get(i).view.getY() + (screenWidth - spaceshipHeight) / 20);
+            }
         }
-
         if (moveCounter == 11) {
             moveCounter = 0;
             movementLeft = !movementLeft;
-        }
-    }
-
-    public void updateEnemiesVertical() {
-        for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).view.setY(enemies.get(i).view.getY() + (screenWidth - spaceshipHeight) / 20);
         }
     }
 
