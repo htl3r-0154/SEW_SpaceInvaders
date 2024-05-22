@@ -1,11 +1,13 @@
 package com.example.spaceinvaders;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 public class EventHandler extends GameEngine {
     SceneBuilder sceneBuilder;
@@ -39,7 +41,7 @@ public class EventHandler extends GameEngine {
         gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceshipWidth / 2);
         gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - 60);
         gameEngine.initShot();
-        sceneBuilder.setImgShot("src/main/resources/Images/Shot1_1.png");
+        sceneBuilder.setImgShot("src/main/resources/Images/shot_gif.gif");
         gameEngine.scene.setOnKeyPressed(this::keyPressed);
         gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship);
 
@@ -55,12 +57,12 @@ public class EventHandler extends GameEngine {
         gameEngine.timeline.setCycleCount(Timeline.INDEFINITE);
         gameEngine.timeline.play();
     }
-//TODO: not use switch cases for movement (reason: performance and cant move while shooting)
+
     public void keyPressed(KeyEvent e){
         switch (e.getCode()) {
             case LEFT, A-> {
                 if (!(gameEngine.viewSpaceship.getX() < (gameEngine.screenWidth * 0.02))) {
-                    gameEngine.viewSpaceship.setX(gameEngine.viewSpaceship.getX() - gameEngine.spaceshipSpeed) ;
+                    gameEngine.viewSpaceship.setX(gameEngine.viewSpaceship.getX() - gameEngine.spaceshipSpeed);
                 }
             }
             case RIGHT, D -> {
@@ -69,7 +71,7 @@ public class EventHandler extends GameEngine {
                 }
             }
             case UP, W, SPACE -> {
-                if (gameEngine.viewShot.getY() + gameEngine.shotHeight < 0){
+                if (gameEngine.viewShot.getY() < 0){
                     gameEngine.shot.timeline.stop();
                     gameEngine.shot.shoot();
                 }

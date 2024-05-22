@@ -37,8 +37,8 @@ public class GameEngine extends Application {
     public Image menuImg = null;
     public Image backgroundImg = null;
     public Image shotImg = null;
-    public final double shotWidth = 8;
-    public final double shotHeight = 24;
+    public final double shotWidth = 90;
+    public final double shotHeight = 110;
     public int shotSpeed;
     public Image spaceshipImg = null;
     public final double spaceshipWidth = 120;
