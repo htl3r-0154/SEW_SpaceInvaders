@@ -3,6 +3,7 @@ package com.example.spaceinvaders;
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -41,8 +42,9 @@ public class EventHandler extends GameEngine {
         gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceshipWidth / 2);
         gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - 60);
         gameEngine.initShot();
-        sceneBuilder.setImgShot("src/main/resources/Images/shot_gif.gif");
+        sceneBuilder.setImgShot("src/main/resources/Images/shot_gif-small.gif");
         gameEngine.scene.setOnKeyPressed(this::keyPressed);
+        gameEngine.scene.setOnMouseMoved(this::mouseMoved);
         gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship);
 
         for (int i = 0; i < 3; i++) {
@@ -57,7 +59,9 @@ public class EventHandler extends GameEngine {
         gameEngine.timeline.setCycleCount(Timeline.INDEFINITE);
         gameEngine.timeline.play();
     }
-
+    public void mouseMoved(MouseEvent e){
+        gameEngine.viewSpaceship.setX(e.getSceneX() - gameEngine.spaceshipWidth /2 +10);
+    }
     public void keyPressed(KeyEvent e){
         switch (e.getCode()) {
             case LEFT, A-> {
@@ -75,6 +79,9 @@ public class EventHandler extends GameEngine {
                     gameEngine.shot.timeline.stop();
                     gameEngine.shot.shoot();
                 }
+            }
+            case Q -> {
+                //ult shot
             }
         }
     }

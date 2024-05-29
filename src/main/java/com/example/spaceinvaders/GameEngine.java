@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -37,14 +38,13 @@ public class GameEngine extends Application {
     public Image menuImg = null;
     public Image backgroundImg = null;
     public Image shotImg = null;
-    public final double shotWidth = 90;
+    public final double shotWidth = 10;
     public final double shotHeight = 110;
     public int shotSpeed;
     public Image spaceshipImg = null;
     public final double spaceshipWidth = 120;
     public final double spaceshipHeight = 120;
     public final double spaceshipSpeed = 20;
-    ;
     public final double enemyWidth = 60;
     public final double enemyHeight = 60;
     public ImageView viewMenu;
@@ -69,6 +69,7 @@ public class GameEngine extends Application {
     public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> updateEnemies()));
     public int moveCounter = 5;
     public boolean movementLeft = true;
+    public boolean dead = false;
 
 
     @Override
@@ -143,7 +144,7 @@ public class GameEngine extends Application {
         timeline = new Timeline(keyFrame);
     }
 
-    private void updateEnemies() {
+    private void updateEnemies() {//?
         moveCounter++;
 
         if (moveCounter != 11) {
