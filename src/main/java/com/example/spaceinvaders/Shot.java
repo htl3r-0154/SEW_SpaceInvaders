@@ -37,7 +37,7 @@ public class Shot {
 
     public void updateShot() {
         gameEngine.viewShot.setY(gameEngine.viewShot.getY() - gameEngine.shotSpeed);
-        if (gameEngine.viewShot.getY() + gameEngine.shotHeight -12 < 0){
+        if (gameEngine.viewShot.getY() + gameEngine.shotHeight - 12 < 0){
             resetImgShot();
         }
         gameEngine.collisionCheck();

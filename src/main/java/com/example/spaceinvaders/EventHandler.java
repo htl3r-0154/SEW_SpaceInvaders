@@ -40,10 +40,11 @@ public class EventHandler extends GameEngine {
         gameEngine.viewBackground.setLayoutX(0);
         gameEngine.viewBackground.setLayoutY(0);
         gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceshipWidth / 2);
-        gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - 60);
+        gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - gameEngine.spaceBetweenSpaceshipAndScreenend);
         gameEngine.initShot();
         sceneBuilder.setImgShot("src/main/resources/Images/shot_gif-small.gif");
         gameEngine.scene.setOnKeyPressed(this::keyPressed);
+        gameEngine.scene.setOnMouseClicked(this::mouseClicked);
         gameEngine.scene.setOnMouseMoved(this::mouseMoved);
         gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship);
 
@@ -61,6 +62,12 @@ public class EventHandler extends GameEngine {
     }
     public void mouseMoved(MouseEvent e){
         gameEngine.viewSpaceship.setX(e.getSceneX() - gameEngine.spaceshipWidth /2 +10);
+    }
+    public void mouseClicked(MouseEvent e){
+        if (gameEngine.viewShot.getY() < 0){
+            gameEngine.shot.timeline.stop();
+            gameEngine.shot.shoot();
+        }
     }
     public void keyPressed(KeyEvent e){
         switch (e.getCode()) {
@@ -80,9 +87,28 @@ public class EventHandler extends GameEngine {
                     gameEngine.shot.shoot();
                 }
             }
-            case Q -> {
+            case Q, S, DOWN -> {
                 //ult shot
             }
         }
+    }
+
+    public void endGame(){
+        gameEngine.mediaPlayer1.stop();
+        gameEngine.timeline.stop();
+        System.out.println(gameEngine.score);
+        if (checkHighscore()){
+            //play sound
+            //display new Highscore text
+        } else {
+            //display score and highscore
+        }
+        gameEngine.sceneBuilder.setPlayAgainButton();
+        gameEngine.sceneBuilder.setMainMenuButton();
+        root.getChildren().addAll(mainMenuButton, playAgainButton);
+        gameEngine.playAgainButton.toFront();
+        gameEngine.mainMenuButton.toFront();
+
+
     }
 }

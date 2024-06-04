@@ -35,6 +35,8 @@ public class GameEngine extends Application {
     public final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
     public Button quitButton = new Button("QUIT");
+    public Button playAgainButton = new Button("PLAY AGAIN");
+    public Button mainMenuButton = new Button("MAIN MENU");
     public Image menuImg = null;
     public Image backgroundImg = null;
     public Image shotImg = null;
@@ -45,6 +47,7 @@ public class GameEngine extends Application {
     public final double spaceshipWidth = 120;
     public final double spaceshipHeight = 120;
     public final double spaceshipSpeed = 20;
+    public final double spaceBetweenSpaceshipAndScreenend = 60;
     public final double enemyWidth = 60;
     public final double enemyHeight = 60;
     public ImageView viewMenu;
@@ -131,9 +134,7 @@ public class GameEngine extends Application {
                 enemies.get(index).resetImgEnemy(viewEnemy);
                 sound.explodeSound1("src/main/resources/Sounds/sinus-bomb.mp3");
                 enemiesLeft--;
-                checkEnemiesLeft();
                 score += 10;
-                System.out.println(score);
             }
         }
     }
@@ -144,8 +145,9 @@ public class GameEngine extends Application {
         timeline = new Timeline(keyFrame);
     }
 
-    private void updateEnemies() {//?
+    private void updateEnemies() {
         moveCounter++;
+        boolean move = true;
 
         if (moveCounter != 11) {
             if (movementLeft) {
@@ -159,13 +161,32 @@ public class GameEngine extends Application {
             }
         } else {//go vertical
             for (int i = 0; i < enemies.size(); i++) {
-                enemies.get(i).view.setY(enemies.get(i).view.getY() + (screenWidth - spaceshipHeight) / 20);
+                enemies.get(i).view.setY(enemies.get(i).view.getY() + (screenHeight - spaceshipHeight) / 10);
+                if (checkEnemies(i)) {
+                    move = false;
+                    break;
+                }
             }
         }
         if (moveCounter == 11) {
             moveCounter = 0;
             movementLeft = !movementLeft;
         }
+        if (!move){
+            eventHandler.endGame();
+        }
+    }
+
+    public boolean checkEnemies(int i){
+        return enemies.get(i).view.getY() >= screenHeight - spaceshipHeight - spaceBetweenSpaceshipAndScreenend - 30 - 500;
+    }
+
+    public boolean checkHighscore(){
+        if (score > highscore){
+            highscore = score;
+            return true;
+        }
+        return false;
     }
 
     public static void main(String[] args) {
