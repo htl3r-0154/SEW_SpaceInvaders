@@ -22,6 +22,7 @@ public class EventHandler extends GameEngine {
 
 
     public void playButtonClick(){
+        gameEngine.stage.setTitle("Space Invaders - In Game");
         gameEngine.playButton.setVisible(false);
         gameEngine.quitButton.setVisible(false);
 
@@ -96,17 +97,14 @@ public class EventHandler extends GameEngine {
     public void endGame(){
         gameEngine.mediaPlayer1.stop();
         gameEngine.timeline.stop();
-        System.out.println(gameEngine.score);
         if (checkHighscore()){
             //play sound
             //display new Highscore text
         } else {
             //display score and highscore
         }
-        gameEngine.sceneBuilder.setPlayAgainButton();
         gameEngine.sceneBuilder.setMainMenuButton();
-        root.getChildren().addAll(mainMenuButton, playAgainButton);
-        gameEngine.playAgainButton.toFront();
+        gameEngine.root.getChildren().addAll(gameEngine.mainMenuButton);
         gameEngine.mainMenuButton.toFront();
 
 

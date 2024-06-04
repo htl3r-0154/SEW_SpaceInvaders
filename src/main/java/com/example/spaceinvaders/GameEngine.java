@@ -29,13 +29,11 @@ public class GameEngine extends Application {
     public SceneBuilder sceneBuilder;
     public Sound sound;
     public EventHandler eventHandler;
-    public Enemy enemy;
     public Shot shot;
     public final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
     public Button quitButton = new Button("QUIT");
-    public Button playAgainButton = new Button("PLAY AGAIN");
     public Button mainMenuButton = new Button("MAIN MENU");
     public Image menuImg = null;
     public Image backgroundImg = null;
@@ -139,13 +137,7 @@ public class GameEngine extends Application {
         }
     }
 
-    public void checkEnemiesLeft() {
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(750), e -> updateEnemies());
-        timeline.play();
-        timeline = new Timeline(keyFrame);
-    }
-
-    private void updateEnemies() {
+    public void updateEnemies() {
         moveCounter++;
         boolean move = true;
 
