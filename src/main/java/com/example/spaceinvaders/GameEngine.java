@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,17 +29,23 @@ public class GameEngine extends Application {
     public Sound sound;
     public EventHandler eventHandler;
     public Enemy enemy;
-    public Shot shot;
+
     public final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
     public Button quitButton = new Button("QUIT");
     public Image menuImg = null;
     public Image backgroundImg = null;
+    public Shot shot;
+    public BigShot bigshot;
     public Image shotImg = null;
+    public Image bigshotImg = null;
     public final double shotWidth = 10;
     public final double shotHeight = 110;
+    public final double bigshotWidth = 90;
+    public final double bigshotHeight = 110;
     public int shotSpeed;
+    public int bigshotSpeed;
     public Image spaceshipImg = null;
     public final double spaceshipWidth = 120;
     public final double spaceshipHeight = 120;
@@ -51,6 +56,7 @@ public class GameEngine extends Application {
     public ImageView viewBackground;
     public ImageView viewSpaceship;
     public ImageView viewShot;
+    public ImageView viewbigShot;
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public Stage stage;
     public Group root = new Group();
@@ -112,11 +118,19 @@ public class GameEngine extends Application {
     public void initShot() {
         this.shot = new Shot(this);
     }
+    public void initbigShot() {
+        this.bigshot = new BigShot(this);
+    }
 
 
     public void collisionCheck() {
         for (int i = 0; i < enemies.size(); i++) {
             collisionCheck(enemies.get(i).view, i);
+        }
+    }
+    public void bigcollisionCheck() {
+        for (int i = 0; i < enemies.size(); i++) {
+            bigcollisionCheck(enemies.get(i).view, i);
         }
     }
 
@@ -137,7 +151,23 @@ public class GameEngine extends Application {
             }
         }
     }
-
+    private void bigcollisionCheck(ImageView viewEnemy, int index) {
+        double rightX = viewbigShot.getX() + bigshotWidth;
+        double leftX = viewbigShot.getX();
+        double bottomY = viewbigShot.getY() + bigshotHeight;
+        double topY = viewbigShot.getY();
+        if (rightX >= viewEnemy.getX() && leftX <= viewEnemy.getX() + enemyWidth) {
+            if (bottomY >= viewEnemy.getY() && topY <= viewEnemy.getY() + enemyHeight) {
+                bigshot.resetImgShot();
+                enemies.get(index).resetImgEnemy(viewEnemy);
+                sound.explodeSound1("src/main/resources/Sounds/sinus-bomb.mp3");
+                enemiesLeft--;
+                checkEnemiesLeft();
+                score += 10;
+                System.out.println(score);
+            }
+        }
+    }
     public void checkEnemiesLeft() {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(750), e -> updateEnemies());
         timeline.play();
@@ -149,17 +179,17 @@ public class GameEngine extends Application {
 
         if (moveCounter != 11) {
             if (movementLeft) {
-                for (int i = 0; i < enemies.size(); i++) {
-                    enemies.get(i).view.setX(enemies.get(i).view.getX() - 30);
+                for (Enemy value : enemies) {
+                    value.view.setX(value.view.getX() - 30);
                 }
             } else {
-                for (int i = 0; i < enemies.size(); i++) {
-                    enemies.get(i).view.setX(enemies.get(i).view.getX() + 30);
+                for (Enemy value : enemies) {
+                    value.view.setX(value.view.getX() + 30);
                 }
             }
         } else {//go vertical
-            for (int i = 0; i < enemies.size(); i++) {
-                enemies.get(i).view.setY(enemies.get(i).view.getY() + (screenWidth - spaceshipHeight) / 20);
+            for (Enemy value : enemies) {
+                value.view.setY(value.view.getY() + (screenWidth - spaceshipHeight) / 20);
             }
         }
         if (moveCounter == 11) {

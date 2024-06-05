@@ -67,6 +67,16 @@ public class SceneBuilder {
         gameEngine.shot.resetImgShot();
         gameEngine.viewShot.toFront();
     }
+    public void setImgbigShot(String src) {
+        try {
+            gameEngine.bigshotImg = new Image((new FileInputStream(src)));
+        } catch (FileNotFoundException ignored) {
+        }
+
+        gameEngine.viewShot = new ImageView(gameEngine.bigshotImg);
+        gameEngine.bigshot.resetImgShot();
+        gameEngine.viewbigShot.toFront();
+    }
 
     public void setPlayButton() {
         gameEngine.playButton.setPrefSize(450, 75);

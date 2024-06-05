@@ -42,7 +42,10 @@ public class EventHandler extends GameEngine {
         gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceshipWidth / 2);
         gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - 60);
         gameEngine.initShot();
+        gameEngine.initbigShot();
         sceneBuilder.setImgShot("src/main/resources/Images/shot_gif-small.gif");
+        sceneBuilder.setImgbigShot("src/main/resources/Images/shot_gif.gif");
+
         gameEngine.scene.setOnKeyPressed(this::keyPressed);
         gameEngine.scene.setOnMouseMoved(this::mouseMoved);
         gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship);
@@ -81,7 +84,10 @@ public class EventHandler extends GameEngine {
                 }
             }
             case Q -> {
-                //ult shot
+                if (gameEngine.viewbigShot.getY() < 0){
+                    gameEngine.bigshot.timeline.stop();
+                    gameEngine.bigshot.bigshoot();
+                }
             }
         }
     }
