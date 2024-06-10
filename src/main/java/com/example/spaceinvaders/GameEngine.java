@@ -17,6 +17,7 @@ import javafx.util.Duration;
 import java.awt.*;
 import java.security.Key;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 //TODO add FileReader for Highscore
 //TODO Display score & highscore
@@ -57,6 +58,15 @@ public class GameEngine extends Application {
     public ImageView viewShot;
     public ImageView viewbigShot;
     public ArrayList<Enemy> enemies = new ArrayList<>();
+    ArrayList<Integer> enemiesX = new ArrayList<Integer>(Arrays.asList(
+            (GameEngine.getScreenWidth() / 9) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (1+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (2+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (3+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (4+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (5+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (6+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (7+1) - GameEngine.getEnemyWidth() / 2));
     public Stage stage;
     public Group root = new Group();
     public Scene scene = new Scene(root);
@@ -186,7 +196,9 @@ public class GameEngine extends Application {
             if (movementLeft) {
                 for (Enemy value : enemies) {
                     value.view.setX(value.view.getX() - 30);
-                    System.out.println(enemies.get(3).getHor());
+                    System.out.println((int)Math.floor(value.view.getX()));
+                    enemiesX.add((int)Math.floor(value.view.getX()));
+                    enemiesX.remove((int)Math.floor(value.view.getX())+30);
                 }
             } else {
                 for (Enemy value : enemies) {

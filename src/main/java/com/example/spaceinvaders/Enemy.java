@@ -26,19 +26,19 @@ public class Enemy {
         this.view.setFitHeight(gameEngine.enemyHeight);
     }
 
-    public int getHor(){
-        return (int) posX;
-    }
-    ArrayList<Integer> availablePositions = new ArrayList<Integer>(Arrays.asList((GameEngine.getScreenWidth() / 9) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (1+1) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (2+1) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (3+1) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (4+1) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (5+1) - GameEngine.getEnemyWidth() / 2,(GameEngine.getScreenWidth() / 9) * (6+1) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (7+1) - GameEngine.getEnemyWidth() / 2));
+    ArrayList<Integer> availablePositions = new ArrayList<Integer>(Arrays.asList(
+            (GameEngine.getScreenWidth() / 9) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (1+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (2+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (3+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (4+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (5+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (6+1) - GameEngine.getEnemyWidth() / 2,
+            (GameEngine.getScreenWidth() / 9) * (7+1) - GameEngine.getEnemyWidth() / 2));
     public void resetImgEnemy(ImageView viewEnemy) {
         int generatePosition = availablePositions.get((int) (Math.random()*availablePositions.size()));
         viewEnemy.setX(generatePosition);
         availablePositions.remove(availablePositions.indexOf(generatePosition));
-        System.out.println("___________________________");
-        System.out.println(generatePosition);
-        System.out.println(availablePositions);
-        System.out.println("___________________________");
-
         if(availablePositions.isEmpty()){
             //availablePositions.addAll(Arrays.asList((int) (gameEngine.screenWidth / 9) * 2, (int) (gameEngine.screenWidth / 9) * 3, (int) (gameEngine.screenWidth / 9) * 4, (int) (gameEngine.screenWidth / 9) * 5, (int) (gameEngine.screenWidth / 9) * 6, (int) (gameEngine.screenWidth / 9) * 7, (int) (gameEngine.screenWidth / 9) * 8, (int) (gameEngine.screenWidth / 9 * 9)));
         }
