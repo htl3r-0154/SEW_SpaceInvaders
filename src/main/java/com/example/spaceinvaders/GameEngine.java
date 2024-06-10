@@ -9,14 +9,11 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.awt.*;
-import java.security.Key;
 import java.util.ArrayList;
 
 //TODO add FileReader for Highscore
@@ -67,7 +64,7 @@ public class GameEngine extends Application {
     public int highscore = HighScoreReader.getHighscore();
     public Text highscoreText = new Text("Highscore: " + highscore);
     public int enemiesLeft = 24;
-    public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> updateEnemies()));
+    public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> updateEnemies()));
     public int moveCounter = 5;
     public boolean movementLeft = true;
     public boolean dead = false;
@@ -133,6 +130,7 @@ public class GameEngine extends Application {
                 sound.explodeSound1("src/main/resources/Sounds/sinus-bomb.mp3");
                 enemiesLeft--;
                 score += 10;
+                System.out.println(score);
             }
         }
     }
@@ -170,7 +168,7 @@ public class GameEngine extends Application {
     }
 
     public boolean checkEnemies(int i){
-        return enemies.get(i).view.getY() >= screenHeight - spaceshipHeight - spaceBetweenSpaceshipAndScreenend - 30 - 500;
+        return enemies.get(i).view.getY() >= screenHeight - spaceshipHeight - spaceBetweenSpaceshipAndScreenend - 30;
     }
 
     public boolean checkHighscore(){

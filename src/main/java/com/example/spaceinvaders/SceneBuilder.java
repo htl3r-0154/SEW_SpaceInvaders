@@ -1,8 +1,6 @@
 package com.example.spaceinvaders;
 
 import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,11 +12,9 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -120,7 +116,7 @@ public class SceneBuilder {
         gameEngine.quitButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
         gameEngine.quitButton.setTextFill(Color.WHITE);
         gameEngine.quitButton.setFont(new Font(25));
-        gameEngine.quitButton.setOnAction(e -> System.exit(0));
+        gameEngine.quitButton.setOnAction(e -> System.exit(187));
     }
 
     public void setMainMenuButton(){
@@ -135,6 +131,22 @@ public class SceneBuilder {
         gameEngine.mainMenuButton.setTextFill(Color.WHITE);
         gameEngine.mainMenuButton.setFont(new Font(25));
         gameEngine.mainMenuButton.setOnAction(e -> {
+
+            gameEngine.root.getChildren().clear();
+            gameEngine.enemies.clear();
+
+
+//            for (int i = 0; i < 3; i++) {
+//                for (int j = 0; j < 8; j++) {
+//                    gameEngine.root.getChildren().clear();
+//                    gameEngine.root.getChildren().remove(gameEngine.enemies.get(i).view);
+//                    gameEngine.enemies.get(i).view.setY(-200);
+//                    gameEngine.enemies.get(i).view.setX(-200);
+//                    System.out.println("After " + gameEngine.enemies.get(i).view.getX());
+//                    System.out.println("After " + gameEngine.enemies.get(i).view.getY());
+//                }
+//            }
+
             gameEngine.root.getChildren().clear();
             gameEngine.stage.hide();
             gameEngine.root = new Group();
@@ -148,6 +160,8 @@ public class SceneBuilder {
             gameEngine.movementLeft = true;
             gameEngine.first = true;
             gameEngine.shot.timeline.stop();
+
+            System.out.println("reset");
         });
     }
 

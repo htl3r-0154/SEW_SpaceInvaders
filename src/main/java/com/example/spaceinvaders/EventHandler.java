@@ -1,16 +1,10 @@
 package com.example.spaceinvaders;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.util.Duration;
 
-public class EventHandler extends GameEngine {
+public class EventHandler {
     SceneBuilder sceneBuilder;
     GameEngine gameEngine;
     Sound sound;
@@ -21,6 +15,13 @@ public class EventHandler extends GameEngine {
     }
 
 
+    /**
+     * Method gets called after the play button has been clicked
+     * - starts music
+     * - changes background
+     * - summons spaceship
+     * - summons enemies
+     */
     public void playButtonClick(){
         gameEngine.stage.setTitle("Space Invaders - In Game");
         gameEngine.playButton.setVisible(false);
@@ -48,6 +49,7 @@ public class EventHandler extends GameEngine {
         gameEngine.scene.setOnMouseClicked(this::mouseClicked);
         gameEngine.scene.setOnMouseMoved(this::mouseMoved);
         gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship);
+
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 8; j++) {
@@ -97,7 +99,7 @@ public class EventHandler extends GameEngine {
     public void endGame(){
         gameEngine.mediaPlayer1.stop();
         gameEngine.timeline.stop();
-        if (checkHighscore()){
+        if (gameEngine.checkHighscore()){
             //play sound
             //display new Highscore text
         } else {
