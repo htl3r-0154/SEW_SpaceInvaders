@@ -3,6 +3,7 @@ package com.example.spaceinvaders;
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -48,6 +49,7 @@ public class EventHandler extends GameEngine {
 
         gameEngine.scene.setOnKeyPressed(this::keyPressed);
         gameEngine.scene.setOnMouseMoved(this::mouseMoved);
+        gameEngine.scene.setOnMouseClicked(this::mouseClicked);
         gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship);
 
         for (int i = 0; i < 3; i++) {
@@ -62,6 +64,22 @@ public class EventHandler extends GameEngine {
         gameEngine.timeline.setCycleCount(Timeline.INDEFINITE);
         gameEngine.timeline.play();
     }
+
+    private void mouseClicked(MouseEvent e) {
+        if (e.getButton() == MouseButton.SECONDARY) {
+            if (gameEngine.viewbigShot.getY() < 0){
+                gameEngine.bigshot.timeline.stop();
+                gameEngine.bigshot.bigshoot();
+            }
+        }
+        if (e.getButton() == MouseButton.PRIMARY) {
+            if (gameEngine.viewShot.getY() < 0){
+                gameEngine.shot.timeline.stop();
+                gameEngine.shot.shoot();
+            }
+        }
+    }
+
     public void mouseMoved(MouseEvent e){
         gameEngine.viewSpaceship.setX(e.getSceneX() - gameEngine.spaceshipWidth /2 +10);
     }

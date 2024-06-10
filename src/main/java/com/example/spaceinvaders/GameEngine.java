@@ -29,7 +29,6 @@ public class GameEngine extends Application {
     public Sound sound;
     public EventHandler eventHandler;
     public Enemy enemy;
-
     public final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
@@ -187,6 +186,7 @@ public class GameEngine extends Application {
             if (movementLeft) {
                 for (Enemy value : enemies) {
                     value.view.setX(value.view.getX() - 30);
+                    System.out.println(enemies.get(3).getHor());
                 }
             } else {
                 for (Enemy value : enemies) {
