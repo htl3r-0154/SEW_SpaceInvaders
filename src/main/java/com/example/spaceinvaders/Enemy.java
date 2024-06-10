@@ -16,7 +16,7 @@ public class Enemy {
     int screenWidth = 0;
     public Enemy(GameEngine gameEngine, int row, int col) {
         this.gameEngine = gameEngine;
-        posX = (gameEngine.screenWidth / 9) * (col + 1) - gameEngine.enemyWidth / 2.0;
+        posX = (gameEngine.screenWidth / 9) * (col + 1) - gameEngine.enemyWidth / 2;
         posY = row * 100 + 100;
         this.image = images[(int) (Math.random() * 3)];
         this.view = new ImageView(image);
@@ -27,7 +27,7 @@ public class Enemy {
     }
 
 
-    ArrayList<Integer> availablePositions = new ArrayList<Integer>(Arrays.asList((int) (GameEngine.getScreenWidth() / 9) * 2, (int) (GameEngine.getScreenWidth() / 9) * 3, (int) (GameEngine.getScreenWidth() / 9) * 4, (int) (GameEngine.getScreenWidth() / 9) * 5, (int) (GameEngine.getScreenWidth() / 9) * 6, (int) (GameEngine.getScreenWidth() / 9) * 7, (int) (GameEngine.getScreenWidth() / 9) * 8, (int) (GameEngine.getScreenWidth() / 9 * 9)));
+    ArrayList<Integer> availablePositions = new ArrayList<Integer>(Arrays.asList((GameEngine.getScreenWidth() / 9) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (1+1) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (2+1) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (3+1) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (4+1) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (5+1) - GameEngine.getEnemyWidth() / 2,(GameEngine.getScreenWidth() / 9) * (6+1) - GameEngine.getEnemyWidth() / 2, (GameEngine.getScreenWidth() / 9) * (7+1) - GameEngine.getEnemyWidth() / 2));
     public void resetImgEnemy(ImageView viewEnemy) {
         int generatePosition = availablePositions.get((int) (Math.random()*availablePositions.size()));
         viewEnemy.setX(generatePosition);

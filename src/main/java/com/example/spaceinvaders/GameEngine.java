@@ -50,7 +50,7 @@ public class GameEngine extends Application {
     public final double spaceshipWidth = 120;
     public final double spaceshipHeight = 120;
     public final double spaceshipSpeed = 20;
-    public final double enemyWidth = 60;
+    public final static double enemyWidth = 60;
     public final double enemyHeight = 60;
     public ImageView viewMenu;
     public ImageView viewBackground;
@@ -116,6 +116,9 @@ public class GameEngine extends Application {
     }
     public static int getScreenWidth(){
         return (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    }
+    public static int getEnemyWidth(){
+        return (int) enemyWidth;
     }
 
     public void initShot() {
