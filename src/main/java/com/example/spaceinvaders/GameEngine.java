@@ -114,6 +114,9 @@ public class GameEngine extends Application {
         //show window
         this.stage.show();
     }
+    public static int getScreenWidth(){
+        return (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    }
 
     public void initShot() {
         this.shot = new Shot(this);

@@ -13,7 +13,7 @@ public class Enemy {
     public Image[] images = new Image[]{new Image("file:src/main/resources/Images/Enemy1.png"), new Image("file:src/main/resources/Images/Enemy2.png"), new Image("file:src/main/resources/Images/Enemy3.png")};
     public Image image;
     public ImageView view;
-
+    int screenWidth = 0;
     public Enemy(GameEngine gameEngine, int row, int col) {
         this.gameEngine = gameEngine;
         posX = (gameEngine.screenWidth / 9) * (col + 1) - gameEngine.enemyWidth / 2.0;
@@ -27,20 +27,20 @@ public class Enemy {
     }
 
 
-
-    public void resetImgEnemy(ImageView viewEnemy) { //change array
-        ArrayList<Integer> availablePositions = new ArrayList<Integer>(Arrays.asList(60,120,180,240,300,360,420,480,540,600,660,720,780,840,900,960,1020,1080,1140,1200,1260,1320,1380));
+    ArrayList<Integer> availablePositions = new ArrayList<Integer>(Arrays.asList((int) (GameEngine.getScreenWidth() / 9) * 2, (int) (GameEngine.getScreenWidth() / 9) * 3, (int) (GameEngine.getScreenWidth() / 9) * 4, (int) (GameEngine.getScreenWidth() / 9) * 5, (int) (GameEngine.getScreenWidth() / 9) * 6, (int) (GameEngine.getScreenWidth() / 9) * 7, (int) (GameEngine.getScreenWidth() / 9) * 8, (int) (GameEngine.getScreenWidth() / 9 * 9)));
+    public void resetImgEnemy(ImageView viewEnemy) {
         int generatePosition = availablePositions.get((int) (Math.random()*availablePositions.size()));
         viewEnemy.setX(generatePosition);
         availablePositions.remove(availablePositions.indexOf(generatePosition));
+        System.out.println("___________________________");
+        System.out.println(generatePosition);
+        System.out.println(availablePositions);
+        System.out.println("___________________________");
+
         if(availablePositions.isEmpty()){
-            availablePositions.addAll(Arrays.asList(60,120,180,240,300,360,420,480,540,600,660,720,780,840,900,960,1020,1080,1140,1200,1260,1320,1380));
+            //availablePositions.addAll(Arrays.asList((int) (gameEngine.screenWidth / 9) * 2, (int) (gameEngine.screenWidth / 9) * 3, (int) (gameEngine.screenWidth / 9) * 4, (int) (gameEngine.screenWidth / 9) * 5, (int) (gameEngine.screenWidth / 9) * 6, (int) (gameEngine.screenWidth / 9) * 7, (int) (gameEngine.screenWidth / 9) * 8, (int) (gameEngine.screenWidth / 9 * 9)));
         }
 
         viewEnemy.setY(-60);
     }
-
-
-
-
 }

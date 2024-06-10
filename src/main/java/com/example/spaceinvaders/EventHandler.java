@@ -44,7 +44,7 @@ public class EventHandler extends GameEngine {
         gameEngine.initShot();
         gameEngine.initbigShot();
         sceneBuilder.setImgShot("src/main/resources/Images/shot_gif-small.gif");
-        sceneBuilder.setImgbigShot("src/main/resources/Images/shot_gif.gif");
+        //sceneBuilder.setImgbigShot("src/main/resources/Images/shot_gif.gif");
 
         gameEngine.scene.setOnKeyPressed(this::keyPressed);
         gameEngine.scene.setOnMouseMoved(this::mouseMoved);
@@ -83,7 +83,7 @@ public class EventHandler extends GameEngine {
                     gameEngine.shot.shoot();
                 }
             }
-            case Q -> {
+            case Q -> {//TODO:
                 if (gameEngine.viewbigShot.getY() < 0){
                     gameEngine.bigshot.timeline.stop();
                     gameEngine.bigshot.bigshoot();
