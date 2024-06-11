@@ -10,10 +10,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.awt.*;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 //TODO add FileReader for Highscore
@@ -42,7 +44,7 @@ public class GameEngine extends Application {
     public final double spaceshipWidth = 120;
     public final double spaceshipHeight = 120;
     public final double spaceshipSpeed = 20;
-    public final double spaceBetweenSpaceshipAndScreenend = 60;
+    public final double spaceBetweenSpaceshipAndScreenEnd = 60;
     public final double enemyWidth = 60;
     public final double enemyHeight = 60;
     public ImageView viewMenu;
@@ -59,6 +61,7 @@ public class GameEngine extends Application {
     public MediaPlayer explosionSFX1;
     public MediaPlayer explosionSFX2;
     public MediaPlayer explosionSFX3;
+    public MediaView intro;
     public final boolean is4k = screenHeight >= 1430.0;
     public boolean first = true;
     public int highscore = HighScoreReader.getHighscore();
@@ -71,7 +74,7 @@ public class GameEngine extends Application {
 
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws MalformedURLException {
         this.stage = stage;
         this.stage.setTitle("Space Invaders - Main Menu");
         this.stage.setScene(scene);
@@ -85,6 +88,13 @@ public class GameEngine extends Application {
         this.sceneBuilder = new SceneBuilder(this);
         this.sound = new Sound(this);
         this.eventHandler = new EventHandler(this, sound, sceneBuilder);
+
+
+        sceneBuilder.setVidIntro("src/main/resources/Images/SpaceInvaders_Intro.mp4");
+
+    }
+
+    public void setup(){
         //Create Score
         sceneBuilder.setScore();
 
@@ -102,9 +112,6 @@ public class GameEngine extends Application {
 
         //Add music
         sound.music2("src/main/resources/Sounds/Harvest Dawn.mp3");
-
-        //show window
-        this.stage.show();
     }
 
     public void initShot() {
@@ -168,7 +175,7 @@ public class GameEngine extends Application {
     }
 
     public boolean checkEnemies(int i){
-        return enemies.get(i).view.getY() >= screenHeight - spaceshipHeight - spaceBetweenSpaceshipAndScreenend - 30;
+        return enemies.get(i).view.getY() >= screenHeight - spaceshipHeight - spaceBetweenSpaceshipAndScreenEnd - 30;
     }
 
     public boolean checkHighscore(){

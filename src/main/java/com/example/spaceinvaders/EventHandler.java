@@ -1,10 +1,16 @@
 package com.example.spaceinvaders;
 
 import javafx.animation.Timeline;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
-public class EventHandler {
+import java.net.MalformedURLException;
+
+public class  EventHandler {
     SceneBuilder sceneBuilder;
     GameEngine gameEngine;
     Sound sound;
@@ -42,7 +48,7 @@ public class EventHandler {
         gameEngine.viewBackground.setLayoutX(0);
         gameEngine.viewBackground.setLayoutY(0);
         gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceshipWidth / 2);
-        gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - gameEngine.spaceBetweenSpaceshipAndScreenend);
+        gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - gameEngine.spaceBetweenSpaceshipAndScreenEnd);
         gameEngine.initShot();
         sceneBuilder.setImgShot("src/main/resources/Images/shot_gif-small.gif");
         gameEngine.scene.setOnKeyPressed(this::keyPressed);
@@ -62,6 +68,26 @@ public class EventHandler {
 
         gameEngine.timeline.setCycleCount(Timeline.INDEFINITE);
         gameEngine.timeline.play();
+    }
+    public void mainMenuButtonClick() throws MalformedURLException {
+        gameEngine.root.getChildren().clear();
+        gameEngine.enemies.clear();
+        gameEngine.root.getChildren().clear();
+        gameEngine.stage.hide();
+        gameEngine.root = new Group();
+        gameEngine.scene = new Scene(gameEngine.root);
+        gameEngine.stage = new Stage();
+        gameEngine.playButton = new Button("PLAY");
+        gameEngine.quitButton = new Button("QUIT");
+        gameEngine.mainMenuButton = new Button("MAIN MENU");
+        gameEngine.start(gameEngine.stage);
+        gameEngine.moveCounter = 5;
+        gameEngine.movementLeft = true;
+        gameEngine.first = true;
+        gameEngine.shot.timeline.stop();
+        gameEngine.score = 0;
+
+        System.out.println("reset");
     }
     public void mouseMoved(MouseEvent e){
         gameEngine.viewSpaceship.setX(e.getSceneX() - gameEngine.spaceshipWidth /2 +10);
