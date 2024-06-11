@@ -17,17 +17,14 @@ import javafx.util.Duration;
 import java.awt.*;
 import java.util.ArrayList;
 
-//TODO add FileReader for Highscore
-//TODO Display score & highscore
-//TODO if score highscore then save to /resources/Gamedata/Highscore
-//TODO add Bunkers with Hitbox to protect Spaceship
+//TODO add Bunkers with Hitbox to protect Spaceship (optional)
 
 public class GameEngine extends Application {
-    public int score = 0;
     public SceneBuilder sceneBuilder;
     public Sound sound;
     public EventHandler eventHandler;
     public Shot shot;
+    public HighScoreReaderAndWriter highScoreReaderAndWriter;
     public final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
@@ -57,19 +54,23 @@ public class GameEngine extends Application {
     public MediaPlayer mediaPlayer2;
     public MediaPlayer mediaPlayer1;
     public MediaPlayer shotSFX;
+    public MediaPlayer scoreSFX;
     public MediaPlayer explosionSFX1;
     public MediaPlayer explosionSFX2;
     public MediaPlayer explosionSFX3;
     public MediaView intro;
     public final boolean is4k = screenHeight >= 1430.0;
     public boolean first = true;
-    public int highscore = HighScoreReader.getHighscore();
-    public Text highscoreText = new Text("Highscore: " + highscore);
+    public int highscore;
+    public Text highscoreText;
+    public int score = 0;
+    public Text scoreText;
     public int enemiesLeft = 24;
     public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), _ -> updateEnemies()));
     public int moveCounter = 5;
     public boolean movementLeft = true;
-    public boolean IntroNeeded = true;
+    public boolean IntroNeeded = false;
+    public boolean dead = false;
 
 
     @Override
@@ -87,6 +88,9 @@ public class GameEngine extends Application {
         this.sceneBuilder = new SceneBuilder(this);
         this.sound = new Sound(this);
         this.eventHandler = new EventHandler(this, sound, sceneBuilder);
+        this.highScoreReaderAndWriter = new HighScoreReaderAndWriter(this);
+        highScoreReaderAndWriter.getHighscore();
+        highscoreText = new Text("Highscore: " + highscore);
 
         if (IntroNeeded){
             sceneBuilder.setVidIntro("src/main/resources/Images/SpaceInvaders_Intro.mp4");
@@ -98,7 +102,7 @@ public class GameEngine extends Application {
 
     public void setup(){
         //Create Score
-        sceneBuilder.setScore();
+        sceneBuilder.setHighscore();
 
         //Create PlayButton
         sceneBuilder.setPlayButton();
@@ -139,7 +143,6 @@ public class GameEngine extends Application {
                 sound.explodeSound1("src/main/resources/Sounds/sinus-bomb.mp3");
                 enemiesLeft--;
                 score += 10;
-                System.out.println(score);
             }
         }
     }

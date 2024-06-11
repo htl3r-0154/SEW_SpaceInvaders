@@ -14,6 +14,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import java.io.FileInputStream;
@@ -157,6 +158,32 @@ public class SceneBuilder {
         gameEngine.mainMenuButton.setOnAction(_ -> gameEngine.eventHandler.mainMenuButtonClick());
     }
 
+    public void setScore(){
+        gameEngine.scoreText = new Text("Score: " + gameEngine.score);
+        gameEngine.scoreText.setVisible(true);
+        gameEngine.scoreText.setTextAlignment(TextAlignment.CENTER);
+        gameEngine.scoreText.setX(gameEngine.screenWidth / 2 - 200);
+        gameEngine.scoreText.setY(gameEngine.screenHeight / 2);
+        gameEngine.scoreText.setFont(new Font(80));
+        gameEngine.scoreText.setFill(Color.SILVER);
+        gameEngine.scoreText.setStrokeWidth(4);
+        gameEngine.scoreText.setStroke(Color.RED);
+        gameEngine.scoreText.toFront();
+    }
+
+    public void setNewScore(){
+        gameEngine.scoreText = new Text("New Highscore: " + gameEngine.score);
+        gameEngine.scoreText.setVisible(true);
+        gameEngine.scoreText.setTextAlignment(TextAlignment.CENTER);
+        gameEngine.scoreText.setX(gameEngine.screenWidth / 2 - 300);
+        gameEngine.scoreText.setY(gameEngine.screenHeight / 2);
+        gameEngine.scoreText.setFont(new Font(80));
+        gameEngine.scoreText.setFill(Color.RED);
+        gameEngine.scoreText.setStrokeWidth(4);
+        gameEngine.scoreText.setStroke(Color.GOLD);
+        gameEngine.scoreText.toFront();
+    }
+
     public void setMenu() {
         gameEngine.sceneBuilder.setImgMenu(gameEngine.menuImg, "src/main/resources/Images/MainMenu.png");
         gameEngine.viewMenu.setFitHeight(gameEngine.stage.getHeight());
@@ -165,12 +192,14 @@ public class SceneBuilder {
         gameEngine.viewMenu.setLayoutY(0);
     }
 
-    public void setScore() {
+    public void setHighscore() {
         gameEngine.highscoreText.setTextAlignment(TextAlignment.RIGHT);
-        gameEngine.highscoreText.setX(gameEngine.screenWidth - 400);
-        gameEngine.highscoreText.setY(60);
-        gameEngine.highscoreText.setFont(new Font(40));
+        gameEngine.highscoreText.setX(gameEngine.screenWidth - 600);
+        gameEngine.highscoreText.setY(100);
+        gameEngine.highscoreText.setFont(new Font(80));
         gameEngine.highscoreText.setFill(Color.WHITE);
+        gameEngine.highscoreText.setStrokeWidth(4);
+        gameEngine.highscoreText.setStroke(Color.RED);
     }
 }
 

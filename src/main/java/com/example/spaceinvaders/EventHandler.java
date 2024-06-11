@@ -68,6 +68,7 @@ public class  EventHandler {
         gameEngine.timeline.play();
     }
     public void mainMenuButtonClick() {
+        gameEngine.scoreText.setVisible(false);
         gameEngine.root.getChildren().clear();
         gameEngine.enemies.clear();
         gameEngine.root.getChildren().clear();
@@ -84,52 +85,62 @@ public class  EventHandler {
         gameEngine.first = true;
         gameEngine.shot.timeline.stop();
         gameEngine.score = 0;
-
-        System.out.println("reset");
+        gameEngine.dead = false;
+        gameEngine.highScoreReaderAndWriter.getHighscore();
     }
     public void mouseMoved(MouseEvent e){
-        gameEngine.viewSpaceship.setX(e.getSceneX() - gameEngine.spaceshipWidth /2 +10);
+        if (!gameEngine.dead){
+            gameEngine.viewSpaceship.setX(e.getSceneX() - gameEngine.spaceshipWidth /2 +10);
+        }
     }
     public void mouseClicked(MouseEvent e){
-        if (gameEngine.viewShot.getY() < 0){
-            gameEngine.shot.timeline.stop();
-            gameEngine.shot.shoot();
+        if (!gameEngine.dead){
+            if (gameEngine.viewShot.getY() < 0){
+                gameEngine.shot.timeline.stop();
+                gameEngine.shot.shoot();
+            }
         }
     }
     public void keyPressed(KeyEvent e){
-        switch (e.getCode()) {
-            case LEFT, A-> {
-                if (!(gameEngine.viewSpaceship.getX() < (gameEngine.screenWidth * 0.02))) {
-                    gameEngine.viewSpaceship.setX(gameEngine.viewSpaceship.getX() - gameEngine.spaceshipSpeed);
+        if (!gameEngine.dead){
+            switch (e.getCode()) {
+                case LEFT, A-> {
+                    if (!(gameEngine.viewSpaceship.getX() < (gameEngine.screenWidth * 0.02))) {
+                        gameEngine.viewSpaceship.setX(gameEngine.viewSpaceship.getX() - gameEngine.spaceshipSpeed);
+                    }
                 }
-            }
-            case RIGHT, D -> {
-                if (!(gameEngine.viewSpaceship.getX() + gameEngine.spaceshipWidth > gameEngine.screenWidth - (gameEngine.screenWidth * 0.02))) {
-                    gameEngine.viewSpaceship.setX(gameEngine.viewSpaceship.getX() + gameEngine.spaceshipSpeed);
+                case RIGHT, D -> {
+                    if (!(gameEngine.viewSpaceship.getX() + gameEngine.spaceshipWidth > gameEngine.screenWidth - (gameEngine.screenWidth * 0.02))) {
+                        gameEngine.viewSpaceship.setX(gameEngine.viewSpaceship.getX() + gameEngine.spaceshipSpeed);
+                    }
                 }
-            }
-            case UP, W, SPACE -> {
-                if (gameEngine.viewShot.getY() < 0){
-                    gameEngine.shot.timeline.stop();
-                    gameEngine.shot.shoot();
+                case UP, W, SPACE -> {
+                    if (gameEngine.viewShot.getY() < 0){
+                        gameEngine.shot.timeline.stop();
+                        gameEngine.shot.shoot();
+                    }
                 }
-            }
-            case Q, S, DOWN -> {
-                //ult shot
+                case Q, S, DOWN -> {
+                    //ult shot
+                }
             }
         }
     }
 
     public void endGame(){
+        gameEngine.dead = true;
         gameEngine.mediaPlayer1.stop();
         gameEngine.timeline.stop();
-        if (gameEngine.checkHighscore()){
-            //play sound
-            //display new Highscore text
-        } else {
-            //display score and highscore
-        }
         gameEngine.sceneBuilder.setMainMenuButton();
+        if (gameEngine.checkHighscore()){
+            sceneBuilder.setNewScore();
+            gameEngine.root.getChildren().add(gameEngine.scoreText);
+            sound.newHighscoreSound("src/main/resources/Sounds/newHighscore.mp3");
+            gameEngine.highScoreReaderAndWriter.writeHighScore(gameEngine.score);
+        } else {
+            sceneBuilder.setScore();
+            gameEngine.root.getChildren().add(gameEngine.scoreText);
+        }
         gameEngine.root.getChildren().addAll(gameEngine.mainMenuButton);
         gameEngine.mainMenuButton.toFront();
 

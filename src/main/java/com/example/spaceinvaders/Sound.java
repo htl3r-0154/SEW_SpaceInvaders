@@ -65,4 +65,11 @@ public class Sound {
         gameEngine.explosionSFX3.setVolume(0.4);
         gameEngine.explosionSFX3.play();
     }
+
+    public void newHighscoreSound(String path){
+        Media m = new Media(Paths.get(path).toUri().toString());
+        gameEngine.scoreSFX = new MediaPlayer(m);
+        gameEngine.scoreSFX.setVolume(0.4);
+        gameEngine.scoreSFX.play();
+    }
 }
