@@ -20,11 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-//TODO add FileReader for Highscore
-//TODO Display score & highscore
-//TODO if score highscore then save to /resources/Gamedata/Highscore
-//TODO add Bunkers with Hitbox to protect Spaceship
-
 public class GameEngine extends Application {
     public int score = 0;
     public SceneBuilder sceneBuilder;

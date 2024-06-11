@@ -31,7 +31,7 @@ public class EventHandler extends GameEngine {
         if (gameEngine.is4k){
             sceneBuilder.setImgBackground(gameEngine.backgroundImg, "src/main/resources/Images/GameBackground4k.png");
         } else {
-            sceneBuilder.setImgBackground(gameEngine.backgroundImg, "src/main/resources/Images/GameBackground!4k.png");
+            sceneBuilder.setImgBackground(gameEngine.backgroundImg, "src/main/resources/Images/background.png");
         }
 
         sceneBuilder.setImgSpaceship("src/main/resources/Images/Spaceship.png");
