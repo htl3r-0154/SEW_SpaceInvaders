@@ -18,6 +18,7 @@ import java.awt.*;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 //TODO add FileReader for Highscore
 //TODO Display score & highscore
@@ -51,22 +52,15 @@ public class GameEngine extends Application {
     public final double spaceshipHeight = 120;
     public final double spaceshipSpeed = 20;
     public final static double enemyWidth = 60;
-    public final double enemyHeight = 60;
+    public static final double enemyHeight = 60;
     public ImageView viewMenu;
     public ImageView viewBackground;
     public ImageView viewSpaceship;
     public ImageView viewShot;
     public ImageView viewbigShot;
+    public int offset = 0;
+    public static ArrayList<Integer> rowcounter = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7));
     public ArrayList<Enemy> enemies = new ArrayList<>();
-    ArrayList<Integer> enemiesX = new ArrayList<Integer>(Arrays.asList(
-            (GameEngine.getScreenWidth() / 9) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (1+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (2+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (3+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (4+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (5+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (6+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (7+1) - GameEngine.getEnemyWidth() / 2));
     public Stage stage;
     public Group root = new Group();
     public Scene scene = new Scene(root);
@@ -123,16 +117,22 @@ public class GameEngine extends Application {
         //show window
         this.stage.show();
     }
-    public static int getScreenWidth(){
+
+    public static int getScreenWidth() {
         return (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     }
-    public static int getEnemyWidth(){
+
+    public static int getEnemyWidth() {
         return (int) enemyWidth;
+    }
+    public static int getEnemyHeight() {
+        return (int) enemyHeight;
     }
 
     public void initShot() {
         this.shot = new Shot(this);
     }
+
     public void initbigShot() {
         this.bigshot = new BigShot(this);
     }
@@ -143,6 +143,7 @@ public class GameEngine extends Application {
             collisionCheck(enemies.get(i).view, i);
         }
     }
+
     public void bigcollisionCheck() {
         for (int i = 0; i < enemies.size(); i++) {
             bigcollisionCheck(enemies.get(i).view, i);
@@ -157,15 +158,15 @@ public class GameEngine extends Application {
         if (rightX >= viewEnemy.getX() && leftX <= viewEnemy.getX() + enemyWidth) {
             if (bottomY >= viewEnemy.getY() && topY <= viewEnemy.getY() + enemyHeight) {
                 shot.resetImgShot();
-                enemies.get(index).resetImgEnemy(viewEnemy);
+                enemies.get(index).resetImgEnemy(viewEnemy, offset);
                 sound.explodeSound1("src/main/resources/Sounds/sinus-bomb.mp3");
                 enemiesLeft--;
                 checkEnemiesLeft();
                 score += 10;
-                System.out.println(score);
             }
         }
     }
+
     private void bigcollisionCheck(ImageView viewEnemy, int index) {
         double rightX = viewbigShot.getX() + bigshotWidth;
         double leftX = viewbigShot.getX();
@@ -174,15 +175,15 @@ public class GameEngine extends Application {
         if (rightX >= viewEnemy.getX() && leftX <= viewEnemy.getX() + enemyWidth) {
             if (bottomY >= viewEnemy.getY() && topY <= viewEnemy.getY() + enemyHeight) {
                 bigshot.resetImgShot();
-                enemies.get(index).resetImgEnemy(viewEnemy);
+                enemies.get(index).resetImgEnemy(viewEnemy,offset);
                 sound.explodeSound1("src/main/resources/Sounds/sinus-bomb.mp3");
                 enemiesLeft--;
                 checkEnemiesLeft();
                 score += 10;
-                System.out.println(score);
             }
         }
     }
+
     public void checkEnemiesLeft() {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(750), e -> updateEnemies());
         timeline.play();
@@ -196,14 +197,13 @@ public class GameEngine extends Application {
             if (movementLeft) {
                 for (Enemy value : enemies) {
                     value.view.setX(value.view.getX() - 30);
-                    System.out.println((int)Math.floor(value.view.getX()));
-                    enemiesX.add((int)Math.floor(value.view.getX()));
-                    enemiesX.remove((int)Math.floor(value.view.getX())+30);
                 }
+                offset -= 30;
             } else {
                 for (Enemy value : enemies) {
                     value.view.setX(value.view.getX() + 30);
                 }
+                offset += 30;
             }
         } else {//go vertical
             for (Enemy value : enemies) {
@@ -213,6 +213,7 @@ public class GameEngine extends Application {
         if (moveCounter == 11) {
             moveCounter = 0;
             movementLeft = !movementLeft;
+            rowcounter = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7));
         }
     }
 

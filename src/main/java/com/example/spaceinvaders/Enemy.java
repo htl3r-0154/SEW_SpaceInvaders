@@ -3,6 +3,7 @@ package com.example.spaceinvaders;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,7 +14,7 @@ public class Enemy {
     public Image[] images = new Image[]{new Image("file:src/main/resources/Images/Enemy1.png"), new Image("file:src/main/resources/Images/Enemy2.png"), new Image("file:src/main/resources/Images/Enemy3.png")};
     public Image image;
     public ImageView view;
-    int screenWidth = 0;
+
     public Enemy(GameEngine gameEngine, int row, int col) {
         this.gameEngine = gameEngine;
         posX = (gameEngine.screenWidth / 9) * (col + 1) - gameEngine.enemyWidth / 2;
@@ -26,23 +27,29 @@ public class Enemy {
         this.view.setFitHeight(gameEngine.enemyHeight);
     }
 
-    ArrayList<Integer> availablePositions = new ArrayList<Integer>(Arrays.asList(
-            (GameEngine.getScreenWidth() / 9) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (1+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (2+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (3+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (4+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (5+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (6+1) - GameEngine.getEnemyWidth() / 2,
-            (GameEngine.getScreenWidth() / 9) * (7+1) - GameEngine.getEnemyWidth() / 2));
-    public void resetImgEnemy(ImageView viewEnemy) {
-        int generatePosition = availablePositions.get((int) (Math.random()*availablePositions.size()));
-        viewEnemy.setX(generatePosition);
-        availablePositions.remove(availablePositions.indexOf(generatePosition));
-        if(availablePositions.isEmpty()){
-            //availablePositions.addAll(Arrays.asList((int) (gameEngine.screenWidth / 9) * 2, (int) (gameEngine.screenWidth / 9) * 3, (int) (gameEngine.screenWidth / 9) * 4, (int) (gameEngine.screenWidth / 9) * 5, (int) (gameEngine.screenWidth / 9) * 6, (int) (gameEngine.screenWidth / 9) * 7, (int) (gameEngine.screenWidth / 9) * 8, (int) (gameEngine.screenWidth / 9 * 9)));
-        }
-
+    public void resetImgEnemy(ImageView viewEnemy, int offset) {
+        int randomIndex = (int) (Math.random() * GameEngine.rowcounter.size());
+        int random = GameEngine.rowcounter.get(randomIndex);
+        GameEngine.rowcounter.remove(randomIndex);
+        viewEnemy.setX(((GameEngine.getScreenWidth() / 9) * (random + 1) - GameEngine.getEnemyWidth() / 2)+offset);
         viewEnemy.setY(-60);
+        /*for (int i = 0; i < gameEngine.enemies.size(); i++) {
+            resetCollision(viewEnemy, i);
+        }*/
+
     }
+
+    /*public void resetCollision(ImageView viewEnemy, int index) {
+        Enemy iEnemy = gameEngine.enemies.get(index);
+        double iEnemyLeft = iEnemy.posX;
+        double iEnemyTop = iEnemy.posY;
+        double viewEnemyTop = viewEnemy.getY();
+        double iEnemyRight = iEnemyLeft +GameEngine.getEnemyWidth();
+        if (iEnemyRight >= viewEnemy.getX() && iEnemyRight <= viewEnemy.getX()+GameEngine.getEnemyWidth()) {
+            if(viewEnemyTop + GameEngine.getEnemyHeight() >= iEnemyTop && viewEnemyTop <= iEnemyTop + GameEngine.getEnemyHeight()){
+                viewEnemy.setImage(new Image("file:src/main/resources/Images/alienship.png"));
+
+            }
+        }
+    }*/
 }
