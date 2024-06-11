@@ -3,10 +3,6 @@ package com.example.spaceinvaders;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Enemy {
     public GameEngine gameEngine;
     public double posX;

@@ -10,21 +10,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 
 public class GameEngine extends Application {
-    public int score = 0;
     public SceneBuilder sceneBuilder;
     public Sound sound;
     public EventHandler eventHandler;
     public Enemy enemy;
     public Shot shot;
+    public HighScoreReaderAndWriter highScoreReaderAndWriter;
     public final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
@@ -47,7 +47,7 @@ public class GameEngine extends Application {
     public final double spaceshipSpeed = 20;
     public final static double enemyWidth = 60;
     public final static double enemyHeight = 60;
-    public final double spaceBetweenSpaceshipAndScreenend = 60;
+    public final double spaceBetweenSpaceshipAndScreenEnd = 60;
     public ImageView viewMenu;
     public ImageView viewBackground;
     public ImageView viewSpaceship;
@@ -62,17 +62,22 @@ public class GameEngine extends Application {
     public MediaPlayer mediaPlayer2;
     public MediaPlayer mediaPlayer1;
     public MediaPlayer shotSFX;
+    public MediaPlayer scoreSFX;
     public MediaPlayer explosionSFX1;
     public MediaPlayer explosionSFX2;
     public MediaPlayer explosionSFX3;
+    public MediaView intro;
     public final boolean is4k = screenHeight >= 1430.0;
     public boolean first = true;
-    public int highscore = HighScoreReader.getHighscore();
-    public Text highscoreText = new Text("Highscore: " + highscore);
+    public int highscore;
+    public Text highscoreText;
+    public int score = 0;
+    public Text scoreText;
     public int enemiesLeft = 24;
     public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> updateEnemies()));
     public int moveCounter = 5;
     public boolean movementLeft = true;
+    public boolean IntroNeeded = false;
     public boolean dead = false;
 
 
@@ -91,8 +96,21 @@ public class GameEngine extends Application {
         this.sceneBuilder = new SceneBuilder(this);
         this.sound = new Sound(this);
         this.eventHandler = new EventHandler(this, sound, sceneBuilder);
+        this.highScoreReaderAndWriter = new HighScoreReaderAndWriter(this);
+        highScoreReaderAndWriter.getHighscore();
+        highscoreText = new Text("Highscore: " + highscore);
+
+        if (IntroNeeded){
+            sceneBuilder.setVidIntro("src/main/resources/Images/SpaceInvaders_Intro.mp4");
+        } else {
+            setup();
+            stage.show();
+        }
+    }
+
+    public void setup(){
         //Create Score
-        sceneBuilder.setScore();
+        sceneBuilder.setHighscore();
 
         //Create PlayButton
         sceneBuilder.setPlayButton();
@@ -108,9 +126,6 @@ public class GameEngine extends Application {
 
         //Add music
         sound.music2("src/main/resources/Sounds/Harvest Dawn.mp3");
-
-        //show window
-        this.stage.show();
     }
 
     public static int getScreenWidth() {
@@ -181,13 +196,13 @@ public class GameEngine extends Application {
 
         if (moveCounter != 11) {
             if (movementLeft) {
-                for (Enemy value : enemies) {
-                    value.view.setX(value.view.getX() - 30);
+                for (Enemy enemy : enemies) {
+                    enemy.view.setX(enemy.view.getX() - 30);
                 }
                 offset -= 30;
             } else {
-                for (Enemy value : enemies) {
-                    value.view.setX(value.view.getX() + 30);
+                for (Enemy enemy : enemies) {
+                    enemy.view.setX(enemy.view.getX() + 30);
                 }
                 offset += 30;
             }
@@ -211,7 +226,7 @@ public class GameEngine extends Application {
     }
 
     public boolean checkEnemies(int i){
-        return enemies.get(i).view.getY() >= screenHeight - spaceshipHeight - spaceBetweenSpaceshipAndScreenend - 30;
+        return enemies.get(i).view.getY() >= screenHeight - spaceshipHeight - spaceBetweenSpaceshipAndScreenEnd - 30;
     }
 
     public boolean checkHighscore(){
