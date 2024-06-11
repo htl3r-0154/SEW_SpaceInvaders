@@ -1,17 +1,11 @@
 package com.example.spaceinvaders;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.util.Duration;
 
-public class EventHandler extends GameEngine {
+public class EventHandler {
     SceneBuilder sceneBuilder;
     GameEngine gameEngine;
     Sound sound;
@@ -22,7 +16,15 @@ public class EventHandler extends GameEngine {
     }
 
 
+    /**
+     * Method gets called after the play button has been clicked
+     * - starts music
+     * - changes background
+     * - summons spaceship
+     * - summons enemies
+     */
     public void playButtonClick(){
+        gameEngine.stage.setTitle("Space Invaders - In Game");
         gameEngine.playButton.setVisible(false);
         gameEngine.quitButton.setVisible(false);
 
@@ -41,16 +43,18 @@ public class EventHandler extends GameEngine {
         gameEngine.viewBackground.setLayoutX(0);
         gameEngine.viewBackground.setLayoutY(0);
         gameEngine.viewSpaceship.setX(gameEngine.screenWidth / 2 - gameEngine.spaceshipWidth / 2);
-        gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - 60);
+        gameEngine.viewSpaceship.setY(gameEngine.screenHeight - gameEngine.spaceshipHeight - gameEngine.spaceBetweenSpaceshipAndScreenend);
         gameEngine.initShot();
         gameEngine.initbigShot();
         sceneBuilder.setImgShot("src/main/resources/Images/shot_gif-small.gif");
         //sceneBuilder.setImgbigShot("src/main/resources/Images/shot_gif.gif");
 
         gameEngine.scene.setOnKeyPressed(this::keyPressed);
+        gameEngine.scene.setOnMouseClicked(this::mouseClicked);
         gameEngine.scene.setOnMouseMoved(this::mouseMoved);
         gameEngine.scene.setOnMouseClicked(this::mouseClicked);
         gameEngine.root.getChildren().addAll(gameEngine.viewBackground, gameEngine.viewSpaceship);
+
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 8; j++) {
@@ -83,6 +87,7 @@ public class EventHandler extends GameEngine {
     public void mouseMoved(MouseEvent e){
         gameEngine.viewSpaceship.setX(e.getSceneX() - gameEngine.spaceshipWidth /2 +10);
     }
+
     public void keyPressed(KeyEvent e){
         switch (e.getCode()) {
             case LEFT, A-> {
@@ -108,5 +113,21 @@ public class EventHandler extends GameEngine {
                 }
             }
         }
+    }
+
+    public void endGame(){
+        gameEngine.mediaPlayer1.stop();
+        gameEngine.timeline.stop();
+        if (gameEngine.checkHighscore()){
+            //play sound
+            //display new Highscore text
+        } else {
+            //display score and highscore
+        }
+        gameEngine.sceneBuilder.setMainMenuButton();
+        gameEngine.root.getChildren().addAll(gameEngine.mainMenuButton);
+        gameEngine.mainMenuButton.toFront();
+
+
     }
 }

@@ -2,6 +2,9 @@ package com.example.spaceinvaders;
 
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -9,12 +12,12 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class SceneBuilder {
     public GameEngine gameEngine;
@@ -98,6 +101,19 @@ public class SceneBuilder {
 
         });
     }
+    public void resetVariables() {
+        gameEngine.root.getChildren().clear();
+        gameEngine.initShot();
+        gameEngine.shotSpeed = (int) (gameEngine.shot.trueHeight / 1.44) / 100;
+        gameEngine.enemies = new ArrayList<>();
+        gameEngine.movementLeft = true;
+        gameEngine.moveCounter = 5;
+        gameEngine.enemiesLeft = 24;
+        gameEngine.first = true;
+        gameEngine.timeline.stop();
+        gameEngine.shot.timeline.stop();
+        gameEngine.shot.timeline.setCycleCount(0);
+    }
 
     public void setExitButton() {
         gameEngine.quitButton.setPrefSize(450, 75);
@@ -110,7 +126,53 @@ public class SceneBuilder {
         gameEngine.quitButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
         gameEngine.quitButton.setTextFill(Color.WHITE);
         gameEngine.quitButton.setFont(new Font(25));
-        gameEngine.quitButton.setOnAction(e -> System.exit(0));
+        gameEngine.quitButton.setOnAction(e -> System.exit(187));
+    }
+
+    public void setMainMenuButton(){
+        gameEngine.mainMenuButton.setPrefSize(450, 75);
+        gameEngine.mainMenuButton.setLayoutX(gameEngine.stage.getWidth() / 2 - gameEngine.quitButton.getPrefWidth() / 2);
+        if (!gameEngine.is4k) {
+            gameEngine.mainMenuButton.setLayoutY(gameEngine.stage.getHeight() / 2 + gameEngine.mainMenuButton.getPrefHeight() * 3 + 50);
+        } else {
+            gameEngine.mainMenuButton.setLayoutY(gameEngine.stage.getHeight() / 2 + gameEngine.mainMenuButton.getPrefHeight() * 5);
+        }
+        gameEngine.mainMenuButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
+        gameEngine.mainMenuButton.setTextFill(Color.WHITE);
+        gameEngine.mainMenuButton.setFont(new Font(25));
+        gameEngine.mainMenuButton.setOnAction(e -> {
+
+            gameEngine.root.getChildren().clear();
+            gameEngine.enemies.clear();
+
+
+//            for (int i = 0; i < 3; i++) {
+//                for (int j = 0; j < 8; j++) {
+//                    gameEngine.root.getChildren().clear();
+//                    gameEngine.root.getChildren().remove(gameEngine.enemies.get(i).view);
+//                    gameEngine.enemies.get(i).view.setY(-200);
+//                    gameEngine.enemies.get(i).view.setX(-200);
+//                    System.out.println("After " + gameEngine.enemies.get(i).view.getX());
+//                    System.out.println("After " + gameEngine.enemies.get(i).view.getY());
+//                }
+//            }
+
+            gameEngine.root.getChildren().clear();
+            gameEngine.stage.hide();
+            gameEngine.root = new Group();
+            gameEngine.scene = new Scene(gameEngine.root);
+            gameEngine.stage = new Stage();
+            gameEngine.playButton = new Button("PLAY");
+            gameEngine.quitButton = new Button("QUIT");
+            gameEngine.mainMenuButton = new Button("MAIN MENU");
+            gameEngine.start(gameEngine.stage);
+            gameEngine.moveCounter = 5;
+            gameEngine.movementLeft = true;
+            gameEngine.first = true;
+            gameEngine.shot.timeline.stop();
+
+            System.out.println("reset");
+        });
     }
 
     public void setMenu() {

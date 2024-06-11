@@ -33,23 +33,5 @@ public class Enemy {
         GameEngine.rowcounter.remove(randomIndex);
         viewEnemy.setX(((GameEngine.getScreenWidth() / 9) * (random + 1) - GameEngine.getEnemyWidth() / 2)+offset);
         viewEnemy.setY(-60);
-        /*for (int i = 0; i < gameEngine.enemies.size(); i++) {
-            resetCollision(viewEnemy, i);
-        }*/
-
     }
-
-    /*public void resetCollision(ImageView viewEnemy, int index) {
-        Enemy iEnemy = gameEngine.enemies.get(index);
-        double iEnemyLeft = iEnemy.posX;
-        double iEnemyTop = iEnemy.posY;
-        double viewEnemyTop = viewEnemy.getY();
-        double iEnemyRight = iEnemyLeft +GameEngine.getEnemyWidth();
-        if (iEnemyRight >= viewEnemy.getX() && iEnemyRight <= viewEnemy.getX()+GameEngine.getEnemyWidth()) {
-            if(viewEnemyTop + GameEngine.getEnemyHeight() >= iEnemyTop && viewEnemyTop <= iEnemyTop + GameEngine.getEnemyHeight()){
-                viewEnemy.setImage(new Image("file:src/main/resources/Images/alienship.png"));
-
-            }
-        }
-    }*/
 }

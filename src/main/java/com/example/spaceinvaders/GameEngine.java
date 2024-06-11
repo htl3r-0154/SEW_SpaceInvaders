@@ -13,9 +13,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.awt.*;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,13 +24,14 @@ public class GameEngine extends Application {
     public Sound sound;
     public EventHandler eventHandler;
     public Enemy enemy;
+    public Shot shot;
     public final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public Button playButton = new Button("PLAY");
     public Button quitButton = new Button("QUIT");
+    public Button mainMenuButton = new Button("MAIN MENU");
     public Image menuImg = null;
     public Image backgroundImg = null;
-    public Shot shot;
     public BigShot bigshot;
     public Image shotImg = null;
     public Image bigshotImg = null;
@@ -47,7 +46,8 @@ public class GameEngine extends Application {
     public final double spaceshipHeight = 120;
     public final double spaceshipSpeed = 20;
     public final static double enemyWidth = 60;
-    public static final double enemyHeight = 60;
+    public final static double enemyHeight = 60;
+    public final double spaceBetweenSpaceshipAndScreenend = 60;
     public ImageView viewMenu;
     public ImageView viewBackground;
     public ImageView viewSpaceship;
@@ -70,7 +70,7 @@ public class GameEngine extends Application {
     public int highscore = HighScoreReader.getHighscore();
     public Text highscoreText = new Text("Highscore: " + highscore);
     public int enemiesLeft = 24;
-    public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> updateEnemies()));
+    public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> updateEnemies()));
     public int moveCounter = 5;
     public boolean movementLeft = true;
     public boolean dead = false;
@@ -155,8 +155,6 @@ public class GameEngine extends Application {
                 shot.resetImgShot();
                 enemies.get(index).resetImgEnemy(viewEnemy, offset);
                 sound.explodeSound1("src/main/resources/Sounds/sinus-bomb.mp3");
-                enemiesLeft--;
-                checkEnemiesLeft();
                 score += 10;
             }
         }
@@ -172,21 +170,14 @@ public class GameEngine extends Application {
                 bigshot.resetImgShot();
                 enemies.get(index).resetImgEnemy(viewEnemy,offset);
                 sound.explodeSound1("src/main/resources/Sounds/sinus-bomb.mp3");
-                enemiesLeft--;
-                checkEnemiesLeft();
                 score += 10;
             }
         }
     }
 
-    public void checkEnemiesLeft() {
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(750), e -> updateEnemies());
-        timeline.play();
-        timeline = new Timeline(keyFrame);
-    }
-
-    private void updateEnemies() {//?
+    public void updateEnemies() {
         moveCounter++;
+        boolean move = true;
 
         if (moveCounter != 11) {
             if (movementLeft) {
@@ -201,8 +192,12 @@ public class GameEngine extends Application {
                 offset += 30;
             }
         } else {//go vertical
-            for (Enemy value : enemies) {
-                value.view.setY(value.view.getY() + (screenWidth - spaceshipHeight) / 20);
+            for (int i = 0; i < enemies.size(); i++) {
+                enemies.get(i).view.setY(enemies.get(i).view.getY() + (screenHeight - spaceshipHeight) / 10);
+                if (checkEnemies(i)) {
+                    move = false;
+                    break;
+                }
             }
         }
         if (moveCounter == 11) {
@@ -210,6 +205,21 @@ public class GameEngine extends Application {
             movementLeft = !movementLeft;
             rowcounter = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7));
         }
+        if (!move){
+            eventHandler.endGame();
+        }
+    }
+
+    public boolean checkEnemies(int i){
+        return enemies.get(i).view.getY() >= screenHeight - spaceshipHeight - spaceBetweenSpaceshipAndScreenend - 30;
+    }
+
+    public boolean checkHighscore(){
+        if (score > highscore){
+            highscore = score;
+            return true;
+        }
+        return false;
     }
 
     public static void main(String[] args) {
