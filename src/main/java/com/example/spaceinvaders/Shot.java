@@ -8,7 +8,7 @@ public class Shot {
     public GameEngine gameEngine;
     public double posX;
     public double trueHeight;
-    public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), e -> updateShot()));
+    public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), _ -> updateShot()));
 
     public Shot(GameEngine gameEngine) {
         this.gameEngine = gameEngine;

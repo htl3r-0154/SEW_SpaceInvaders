@@ -18,7 +18,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.nio.file.Paths;
 
 public class SceneBuilder {
@@ -95,6 +94,7 @@ public class SceneBuilder {
 
         //show window
         gameEngine.stage.show();
+        gameEngine.IntroNeeded = false;
         mediaPlayer.setOnEndOfMedia(() -> gameEngine.setup());
     }
 
@@ -109,7 +109,7 @@ public class SceneBuilder {
         gameEngine.playButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
         gameEngine.playButton.setTextFill(Color.WHITE);
         gameEngine.playButton.setFont(new Font(25));
-        gameEngine.playButton.setOnAction(e -> {
+        gameEngine.playButton.setOnAction(_ -> {
             gameEngine.eventHandler.playButtonClick();
             gameEngine.mediaPlayer2.stop();
         });
@@ -121,19 +121,6 @@ public class SceneBuilder {
         fade.setToValue(1);
         fade.play();
     }
-//    public void resetVariables() {
-//        gameEngine.root.getChildren().clear();
-//        gameEngine.initShot();
-//        gameEngine.shotSpeed = (int) (gameEngine.shot.trueHeight / 1.44) / 100;
-//        gameEngine.enemies = new ArrayList<>();
-//        gameEngine.movementLeft = true;
-//        gameEngine.moveCounter = 5;
-//        gameEngine.enemiesLeft = 24;
-//        gameEngine.first = true;
-//        gameEngine.timeline.stop();
-//        gameEngine.shot.timeline.stop();
-//        gameEngine.shot.timeline.setCycleCount(0);
-//    }
 
     public void setExitButton() {
         gameEngine.quitButton.setPrefSize(450, 75);
@@ -146,7 +133,7 @@ public class SceneBuilder {
         gameEngine.quitButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
         gameEngine.quitButton.setTextFill(Color.WHITE);
         gameEngine.quitButton.setFont(new Font(25));
-        gameEngine.quitButton.setOnAction(e -> System.exit(187));
+        gameEngine.quitButton.setOnAction(_ -> System.exit(187));
 
         FadeTransition fade = new FadeTransition();
         fade.setNode(gameEngine.quitButton);
@@ -167,12 +154,7 @@ public class SceneBuilder {
         gameEngine.mainMenuButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
         gameEngine.mainMenuButton.setTextFill(Color.WHITE);
         gameEngine.mainMenuButton.setFont(new Font(25));
-        gameEngine.mainMenuButton.setOnAction(e -> {
-            try {
-                gameEngine.eventHandler.mainMenuButtonClick();
-            } catch (MalformedURLException ignored) {
-            }
-        });
+        gameEngine.mainMenuButton.setOnAction(_ -> gameEngine.eventHandler.mainMenuButtonClick());
     }
 
     public void setMenu() {

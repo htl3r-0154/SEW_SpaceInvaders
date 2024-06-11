@@ -15,7 +15,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.awt.*;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 //TODO add FileReader for Highscore
@@ -67,14 +66,14 @@ public class GameEngine extends Application {
     public int highscore = HighScoreReader.getHighscore();
     public Text highscoreText = new Text("Highscore: " + highscore);
     public int enemiesLeft = 24;
-    public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> updateEnemies()));
+    public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), _ -> updateEnemies()));
     public int moveCounter = 5;
     public boolean movementLeft = true;
-    public boolean dead = false;
+    public boolean IntroNeeded = true;
 
 
     @Override
-    public void start(Stage stage) throws MalformedURLException {
+    public void start(Stage stage) {
         this.stage = stage;
         this.stage.setTitle("Space Invaders - Main Menu");
         this.stage.setScene(scene);
@@ -89,9 +88,12 @@ public class GameEngine extends Application {
         this.sound = new Sound(this);
         this.eventHandler = new EventHandler(this, sound, sceneBuilder);
 
-
-        sceneBuilder.setVidIntro("src/main/resources/Images/SpaceInvaders_Intro.mp4");
-
+        if (IntroNeeded){
+            sceneBuilder.setVidIntro("src/main/resources/Images/SpaceInvaders_Intro.mp4");
+        } else {
+            setup();
+            stage.show();
+        }
     }
 
     public void setup(){
@@ -148,12 +150,12 @@ public class GameEngine extends Application {
 
         if (moveCounter != 11) {
             if (movementLeft) {
-                for (int i = 0; i < enemies.size(); i++) {
-                    enemies.get(i).view.setX(enemies.get(i).view.getX() - 30);
+                for (Enemy enemy : enemies) {
+                    enemy.view.setX(enemy.view.getX() - 30);
                 }
             } else {
-                for (int i = 0; i < enemies.size(); i++) {
-                    enemies.get(i).view.setX(enemies.get(i).view.getX() + 30);
+                for (Enemy enemy : enemies) {
+                    enemy.view.setX(enemy.view.getX() + 30);
                 }
             }
         } else {//go vertical

@@ -27,10 +27,10 @@ public class Enemy {
     }
 
     public void resetImgEnemy(ImageView viewEnemy) { //change array
-        ArrayList<Integer> availablePositions = new ArrayList<Integer>(Arrays.asList(60,120,180,240,300,360,420,480,540,600,660,720,780,840,900,960,1020,1080,1140,1200,1260,1320,1380));
+        ArrayList<Integer> availablePositions = new ArrayList<>(Arrays.asList(60, 120, 180, 240, 300, 360, 420, 480, 540, 600, 660, 720, 780, 840, 900, 960, 1020, 1080, 1140, 1200, 1260, 1320, 1380));
         int generatePosition = availablePositions.get((int) (Math.random()*availablePositions.size()));
         viewEnemy.setX(generatePosition);
-        availablePositions.remove(availablePositions.indexOf(generatePosition));
+        availablePositions.remove((Integer) generatePosition);
         if(availablePositions.isEmpty()){
             availablePositions.addAll(Arrays.asList(60,120,180,240,300,360,420,480,540,600,660,720,780,840,900,960,1020,1080,1140,1200,1260,1320,1380));
         }

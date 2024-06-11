@@ -8,8 +8,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.net.MalformedURLException;
-
 public class  EventHandler {
     SceneBuilder sceneBuilder;
     GameEngine gameEngine;
@@ -69,7 +67,7 @@ public class  EventHandler {
         gameEngine.timeline.setCycleCount(Timeline.INDEFINITE);
         gameEngine.timeline.play();
     }
-    public void mainMenuButtonClick() throws MalformedURLException {
+    public void mainMenuButtonClick() {
         gameEngine.root.getChildren().clear();
         gameEngine.enemies.clear();
         gameEngine.root.getChildren().clear();
