@@ -54,7 +54,8 @@ public class GameEngine extends Application {
     public ImageView viewShot;
     public ImageView viewbigShot;
     public int offset = 0;
-    public static ArrayList<Integer> rowcounter = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7));
+    public static ArrayList<Integer> resetrow = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7));
+    public static ArrayList<Integer> backuprow = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7));
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public Stage stage;
     public Group root = new Group();
@@ -73,7 +74,6 @@ public class GameEngine extends Application {
     public Text highscoreText;
     public int score = 0;
     public Text scoreText;
-    public int enemiesLeft = 24;
     public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> updateEnemies()));
     public int moveCounter = 5;
     public boolean movementLeft = true;
@@ -134,9 +134,6 @@ public class GameEngine extends Application {
 
     public static int getEnemyWidth() {
         return (int) enemyWidth;
-    }
-    public static int getEnemyHeight() {
-        return (int) enemyHeight;
     }
 
     public void initShot() {
@@ -218,7 +215,8 @@ public class GameEngine extends Application {
         if (moveCounter == 11) {
             moveCounter = 0;
             movementLeft = !movementLeft;
-            rowcounter = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7));
+            resetrow = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7));
+            backuprow = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7));
         }
         if (!move){
             eventHandler.endGame();
@@ -226,7 +224,7 @@ public class GameEngine extends Application {
     }
 
     public boolean checkEnemies(int i){
-        return enemies.get(i).view.getY() >= screenHeight - spaceshipHeight - spaceBetweenSpaceshipAndScreenEnd - 30;
+        return enemies.get(i).view.getY() >= screenHeight - spaceshipHeight - spaceBetweenSpaceshipAndScreenEnd - 40;
     }
 
     public boolean checkHighscore(){

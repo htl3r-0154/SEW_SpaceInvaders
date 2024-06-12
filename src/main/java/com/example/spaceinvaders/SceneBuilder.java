@@ -13,9 +13,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.text.*;
 import javafx.util.Duration;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -117,7 +115,7 @@ public class SceneBuilder {
         } else {
             gameEngine.playButton.setLayoutY(gameEngine.stage.getHeight() / 2 + gameEngine.playButton.getPrefHeight() * 4);
         }
-        gameEngine.playButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
+        gameEngine.playButton.setBackground(new Background(new BackgroundFill(Color.MEDIUMPURPLE, new CornerRadii(15), new Insets(10))));
         gameEngine.playButton.setTextFill(Color.WHITE);
         gameEngine.playButton.setFont(new Font(25));
         gameEngine.playButton.setOnAction(e -> {
@@ -141,7 +139,7 @@ public class SceneBuilder {
         } else {
             gameEngine.quitButton.setLayoutY(gameEngine.stage.getHeight() / 2 + gameEngine.quitButton.getPrefHeight() * 5);
         }
-        gameEngine.quitButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
+        gameEngine.quitButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(15), new Insets(10))));
         gameEngine.quitButton.setTextFill(Color.WHITE);
         gameEngine.quitButton.setFont(new Font(25));
         gameEngine.quitButton.setOnAction(e -> System.exit(187));
@@ -162,7 +160,7 @@ public class SceneBuilder {
         } else {
             gameEngine.mainMenuButton.setLayoutY(gameEngine.stage.getHeight() / 2 + gameEngine.mainMenuButton.getPrefHeight() * 5);
         }
-        gameEngine.mainMenuButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(2), new Insets(10))));
+        gameEngine.mainMenuButton.setBackground(new Background(new BackgroundFill(Color.MEDIUMPURPLE, new CornerRadii(15), new Insets(10))));
         gameEngine.mainMenuButton.setTextFill(Color.WHITE);
         gameEngine.mainMenuButton.setFont(new Font(25));
         gameEngine.mainMenuButton.setOnAction(e -> gameEngine.eventHandler.mainMenuButtonClick());
@@ -174,10 +172,8 @@ public class SceneBuilder {
         gameEngine.scoreText.setTextAlignment(TextAlignment.CENTER);
         gameEngine.scoreText.setX(gameEngine.screenWidth / 2 - 200);
         gameEngine.scoreText.setY(gameEngine.screenHeight / 2);
-        gameEngine.scoreText.setFont(new Font(80));
-        gameEngine.scoreText.setFill(Color.SILVER);
-        gameEngine.scoreText.setStrokeWidth(4);
-        gameEngine.scoreText.setStroke(Color.RED);
+        gameEngine.scoreText.setFill(Color.MEDIUMPURPLE);
+        gameEngine.scoreText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR, 60));
         gameEngine.scoreText.toFront();
     }
 
@@ -187,10 +183,8 @@ public class SceneBuilder {
         gameEngine.scoreText.setTextAlignment(TextAlignment.CENTER);
         gameEngine.scoreText.setX(gameEngine.screenWidth / 2 - 300);
         gameEngine.scoreText.setY(gameEngine.screenHeight / 2);
-        gameEngine.scoreText.setFont(new Font(80));
-        gameEngine.scoreText.setFill(Color.RED);
-        gameEngine.scoreText.setStrokeWidth(4);
-        gameEngine.scoreText.setStroke(Color.GOLD);
+        gameEngine.scoreText.setFill(Color.MEDIUMPURPLE);
+        gameEngine.scoreText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR, 60));
         gameEngine.scoreText.toFront();
     }
 
@@ -205,11 +199,11 @@ public class SceneBuilder {
     public void setHighscore() {
         gameEngine.highscoreText.setTextAlignment(TextAlignment.RIGHT);
         gameEngine.highscoreText.setX(gameEngine.screenWidth - 600);
-        gameEngine.highscoreText.setY(100);
-        gameEngine.highscoreText.setFont(new Font(80));
-        gameEngine.highscoreText.setFill(Color.WHITE);
+        gameEngine.highscoreText.setY(gameEngine.screenHeight- (gameEngine.screenHeight/9));
+        gameEngine.highscoreText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR, 60));
+        gameEngine.highscoreText.setFill(Color.PURPLE);
         gameEngine.highscoreText.setStrokeWidth(4);
-        gameEngine.highscoreText.setStroke(Color.RED);
+        gameEngine.highscoreText.setStroke(Color.BLACK);
     }
 }
 

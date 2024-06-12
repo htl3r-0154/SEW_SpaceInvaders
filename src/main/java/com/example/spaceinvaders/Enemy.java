@@ -1,7 +1,9 @@
 package com.example.spaceinvaders;
 
+import javafx.animation.FadeTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 public class Enemy {
     public GameEngine gameEngine;
@@ -24,10 +26,23 @@ public class Enemy {
     }
 
     public void resetImgEnemy(ImageView viewEnemy, int offset) {
-        int randomIndex = (int) (Math.random() * GameEngine.rowcounter.size());
-        int random = GameEngine.rowcounter.get(randomIndex);
-        GameEngine.rowcounter.remove(randomIndex);
-        viewEnemy.setX(((GameEngine.getScreenWidth() / 9) * (random + 1) - GameEngine.getEnemyWidth() / 2)+offset);
-        viewEnemy.setY(-60);
+        if(!GameEngine.resetrow.isEmpty()){
+            int randomIndex = (int) (Math.random() * GameEngine.resetrow.size());
+            int random = GameEngine.resetrow.get(randomIndex);
+            GameEngine.resetrow.remove(randomIndex);
+            viewEnemy.setX(((GameEngine.getScreenWidth() / 9) * (random + 1) - GameEngine.getEnemyWidth() / 2)+offset);
+            viewEnemy.setY(0);
+        }else{
+            int randomIndex = (int) (Math.random() * GameEngine.backuprow.size());
+            int random = GameEngine.backuprow.get(randomIndex);
+            GameEngine.backuprow.remove(randomIndex);
+            viewEnemy.setX(((GameEngine.getScreenWidth() / 9) * (random + 1) - GameEngine.getEnemyWidth() / 2)+offset);
+            viewEnemy.setY(-100);
+        }
+        FadeTransition ft = new FadeTransition(Duration.millis(500), viewEnemy);
+
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
     }
 }
