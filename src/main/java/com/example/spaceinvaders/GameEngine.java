@@ -77,7 +77,7 @@ public class GameEngine extends Application {
     public Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> updateEnemies()));
     public int moveCounter = 5;
     public boolean movementLeft = true;
-    public boolean IntroNeeded = false;
+    public boolean IntroNeeded = true;
     public boolean dead = false;
 
 

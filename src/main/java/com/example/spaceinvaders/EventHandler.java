@@ -111,6 +111,7 @@ public class EventHandler {
         gameEngine.shot.timeline.stop();
         gameEngine.score = 0;
         gameEngine.dead = false;
+        gameEngine.offset = 0;
         gameEngine.highScoreReaderAndWriter.getHighscore();
     }
 
